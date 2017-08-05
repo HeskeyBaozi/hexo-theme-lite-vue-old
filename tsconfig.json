@@ -4,7 +4,7 @@
     "sourceMap": true,
     "strict": true,
     "noImplicitReturns": true,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
     "allowSyntheticDefaultImports": true,
@@ -14,7 +14,13 @@
       "es5",
       "es2015.promise"
     ],
-    "experimentalDecorators": true
+    "baseUrl": "./",
+    "experimentalDecorators": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
     "./src/**/*"
