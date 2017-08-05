@@ -14,12 +14,22 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-      component: () => import('@/pages/Home.vue') //(r: any) => require.ensure([], () => r(require('@/pages/Home.vue')), 'home')
+      component: () => import('@/pages/Home.vue')
     },
     {
       path: '/archives',
       name: 'Archives',
-      component: () => import('@/pages/Archives.vue') // (r: any) => require.ensure([], () => r(require('@/pages/Archives.vue')), 'archives')
+      component: () => import('@/pages/Archives.vue')
+    },
+    {
+      path: '/categories',
+      name: 'Categories',
+      component: () => import('@/pages/Categories.vue')
+    },
+    {
+      path: '/tags',
+      name: 'Tags',
+      component: () => import('@/pages/Tags.vue')
     }
   ]
 });

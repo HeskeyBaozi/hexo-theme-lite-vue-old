@@ -1,6 +1,6 @@
 <template>
-  <div class="lite-home">
-    Home
+  <div id="lite-tags">
+    tags
   </div>
 </template>
 
@@ -9,9 +9,9 @@
   import {Component} from 'vue-property-decorator';
 
   @Component({
-    name: 'home'
+    name: 'tags'
   })
-  export default class Home extends Vue {
+  export default class Tags extends Vue {
 
   }
 </script>
