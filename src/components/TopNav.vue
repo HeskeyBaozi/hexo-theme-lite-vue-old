@@ -1,10 +1,18 @@
 <template>
   <div id="lite-top-nav">
     <ul>
-      <li>Home</li>
-      <li>Archives</li>
-      <li>Categories</li>
-      <li>Tags</li>
+      <li>
+        <router-link :to="{name:'Home'}">Home</router-link>
+      </li>
+      <li>
+        <router-link :to="{name:'Archives'}">Archives</router-link>
+      </li>
+      <li>
+        <router-link :to="{name:'Categories'}">Categories</router-link>
+      </li>
+      <li>
+        <router-link :to="{name:'Tags'}">Tags</router-link>
+      </li>
     </ul>
   </div>
 </template>

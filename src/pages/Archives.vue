@@ -11,20 +11,21 @@
   import {PostListItem} from "@/interfaces";
   import {Initialize_Archives_Page} from "@/store/modules/archives";
 
-  const ArchivesState = namespace('archives', State);
-  const ArchivesAction = namespace('archives', Action);
+  const ModuleState = namespace('archives', State);
+  const ModuleAction = namespace('archives', Action);
 
   @Component({
     name: 'archives'
   })
   export default class Archives extends Vue {
-    @ArchivesState
+    @ModuleState
     postsList: PostListItem[];
 
-    @ArchivesAction(Initialize_Archives_Page)
-    initialize: (payload: { pageNum: number }) => any;
+    @ModuleAction(Initialize_Archives_Page)
+    initialize: (payload: { pageNum: number }) => Promise<any>;
 
-    async created() {
+    created() {
+      console.log('Archives created');
       this.initialize({pageNum: 1});
     }
   }

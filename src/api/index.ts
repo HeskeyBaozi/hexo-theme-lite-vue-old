@@ -1,6 +1,6 @@
-declare const require: any;
+declare const require: (url: string) => any;
 
-const apiPrefix: string = './mock';
+const apiPrefix: string = '.';
 
 /**
  * Config
