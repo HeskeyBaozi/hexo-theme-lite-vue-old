@@ -9,6 +9,8 @@
     "target": "es5",
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "noImplicitAny": false,
     "lib": [
       "dom",
       "es5",
@@ -19,6 +21,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "iview-comp/*": [
+        "./node_modules/iview/src/components/*"
       ]
     }
   },
