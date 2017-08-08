@@ -42,6 +42,14 @@ const router = new Router({
       meta: {
         requireGlobalInitialized: true
       }
+    },
+    {
+      path: '/articles/:slug',
+      name: 'OneArticle',
+      component: () => import('@/pages/Article.vue'),
+      meta: {
+        requireGlobalInitialized: true
+      }
     }
   ]
 });

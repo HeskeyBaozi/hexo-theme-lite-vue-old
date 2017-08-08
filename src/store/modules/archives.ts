@@ -50,14 +50,14 @@ const mutations: MutationTree<ArchivesState> = {
 /**
  * Actions Types
  */
-export const Initialize_Archives_Page = 'Initialized_Global_App';
+export const Initialize_Archives_Page = 'Initialize_Archives_Page';
 export const Input_PageNum = 'Input_PageNum';
 /**
  * Actions
  */
 const actions: ActionTree<ArchivesState, any> = {
   [Initialize_Archives_Page]: async ({commit, getters}, payload: { pageNum: number }) => {
-    if (!getters.pageInitialized) {
+    if (!getters[Page_Initialized]) {
       const json = await fetchPostsListByPageNumber(payload.pageNum);
       const {data, total, pageSize, pageCount} = json;
       commit({
@@ -84,8 +84,17 @@ const actions: ActionTree<ArchivesState, any> = {
   }
 };
 
+
+/**
+ * Getters Types
+ */
+export const Page_Initialized = 'Page_Initialized';
+
+/**
+ * Getters
+ */
 const getters: GetterTree<ArchivesState, any> = {
-  pageInitialized: (state: ArchivesState, getters: any, rootState: any, rootGetters: any): boolean => {
+  [Page_Initialized]: (state: ArchivesState, getters: any, rootState: any, rootGetters: any): boolean => {
     return state.pageInitialized;
   }
 };

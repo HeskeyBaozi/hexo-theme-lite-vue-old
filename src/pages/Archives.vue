@@ -5,8 +5,7 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Vue} from 'vue-property-decorator';
   import {State, namespace, Action} from 'vuex-class';
   import {PostListItem} from "@/interfaces";
   import {Initialize_Archives_Page} from "@/store/modules/archives";

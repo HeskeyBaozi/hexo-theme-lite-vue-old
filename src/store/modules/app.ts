@@ -123,7 +123,7 @@ const actions: ActionTree<AppState, any> = {
     const json = await new Promise((resolve) => {
       setTimeout(() => {
         resolve(fetchHexoConfig());
-      }, 5000);
+      }, 500);
     });
     commit({
       type: Save_Global_Hexo_Var,
@@ -140,6 +140,9 @@ const actions: ActionTree<AppState, any> = {
  */
 export const Global_Initialized$ = 'Global_Initialized$';
 
+/**
+ * Getters
+ */
 const getters: GetterTree<AppState, any> = {
   [Global_Initialized$]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
     return state.globalInitialized;

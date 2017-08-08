@@ -1,7 +1,9 @@
 <template>
-  <div id="lite-top-nav" class="container-fluid">
+  <div id="lite-top-nav">
     <i-dropdown placement="bottom-start" trigger="click" transfer>
-      <i-button type="ghost" icon="navicon-round">Menu</i-button>
+      <l-button>
+        <span>Menu</span>
+      </l-button>
       <i-dropdown-menu slot="list">
         <i-dropdown-item>
           <router-link tag="p" :to="{name:'Home'}">Home</router-link>
@@ -21,18 +23,18 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import Component from 'vue-class-component';
   import IDropdown from 'iview-comp/dropdown/dropdown.vue';
   import IDropdownMenu from 'iview-comp/dropdown/dropdown-menu.vue';
   import IDropdownItem from 'iview-comp/dropdown/dropdown-item.vue';
   import Icon from 'iview-comp/icon';
-  import IButton from 'iview-comp/button'
+  import {Component, Prop, Vue} from "vue-property-decorator";
+  import LButton from '@/components/LButton';
+
 
   @Component({
     name: 'top-nav',
     components: {
-      IDropdown, Icon, IDropdownMenu, IDropdownItem, IButton
+      IDropdown, Icon, IDropdownMenu, IDropdownItem, LButton
     }
   })
   export default class TopNav extends Vue {
@@ -50,7 +52,5 @@
     left: 0;
     right: 0;
     height: 60px;
-    z-index: 100;
-    background-color: rgba(255, 255, 255, 0.54);
   }
 </style>
