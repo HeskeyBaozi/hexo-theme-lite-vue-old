@@ -29,7 +29,7 @@
         </i-carousel>
       </div>
       <div class="cover" v-else-if="post.cover">
-        <div class="img-wrapper">
+        <div class="img-wrapper" @click="showModal(post.cover, post)">
           <img :src="post.cover" alt="cover"/>
         </div>
       </div>
@@ -130,16 +130,25 @@
   .ivu-modal {
     width: min-content !important;
 
-    .article-modal-img {
-      max-width: 900px;
-    }
+    .ivu-modal-content {
+      border-radius: 0;
 
-    .article-modal-close {
+      .ivu-modal-body {
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
+      .article-modal-img {
+        max-width: 900px;
+      }
+
+      .article-modal-close {
+
+      }
     }
   }
-
-
 </style>
 
 <style lang="less" scoped>
@@ -196,7 +205,7 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
-        cursor: pointer;
+        cursor: zoom-in;
 
         > img {
           max-width: 100%;
