@@ -1,13 +1,13 @@
 <template>
   <div id="lite-article">
-    <section class="article-leading">
-      <div class="article-title">
-        <h1>{{article.title}}</h1>
-      </div>
-      <div class="article-meta">meta</div>
-    </section>
-    <hr/>
+    <article-card :post="article"
+                  :dateFormat="dateTimeFormat.date_format"
+                  :showExcerpt="false"
+    ></article-card>
     <article-content :content="article.content"></article-content>
+    <footer class="article-footer">
+      <p>EOF</p>
+    </footer>
   </div>
 </template>
 
@@ -17,17 +17,23 @@
   import {Article} from '@/interfaces';
   import {Initialize_Article_Page} from "@/store/modules/one-article";
   import ArticleContent from '@/components/ArticleContent';
+  import ArticleCard from '@/components/ArticleCard';
+  import {DateTimeFormat} from "@/interfaces/appClass";
 
   const ModuleState = namespace('article', State);
   const ModuleAction = namespace('article', Action);
+  const AppState = namespace('app', State);
 
   @Component({
     name: 'article',
-    components: {ArticleContent}
+    components: {ArticleContent, ArticleCard}
   })
   export default class OneArticle extends Vue {
     @ModuleState
     article: Article;
+
+    @AppState
+    dateTimeFormat: DateTimeFormat;
 
     @ModuleAction(Initialize_Article_Page)
     initialize: (payload: { slug: string }) => Promise<any>;
@@ -46,3 +52,15 @@
     }
   }
 </script>
+
+<style lang="less" scoped>
+  #lite-article {
+    .article-footer {
+      font-size: 0.8em;
+      font-style: italic;
+      text-align: center;
+      color: #8e8e8e;
+    }
+  }
+
+</style>

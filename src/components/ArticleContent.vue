@@ -200,13 +200,13 @@
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 1.8em;
       border-bottom: 1px solid #ddd;
       margin-bottom: .5em;
     }
 
     h2 {
-      font-size: 2em;
+      font-size: 1.7em;
       border-bottom: 1px solid #eee;
       margin-bottom: .5em;
     }

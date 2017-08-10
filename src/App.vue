@@ -85,12 +85,12 @@
 
     #scroll-background {
       z-index: -100;
-     // background-color: white; // for a nice background picture
+      // background-color: white; // for a nice background picture
     }
 
     .card-container {
       background-color: white;
-      padding: 1em;
+      padding: 1em 2em;
       box-shadow: 0 0 5px gray;
       transition: box-shadow 300ms;
       &:hover {

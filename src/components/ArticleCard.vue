@@ -3,19 +3,23 @@
     <section class="article-meta">
       <div class="article-leading">
         <h1 class="title">
-          <a v-if="post.link.length" target="_blank" :href="post.link">{{post.title || 'Untitled'}}
-            <i-icon type="link"></i-icon>
-          </a>
-          <router-link v-else :to="{name: 'OneArticle', params: {slug: post.slug}}">{{post.title || 'Untitled'}}
-          </router-link>
+          <template v-if="showExcerpt">
+            <a v-if="post.link && post.link.length" target="_blank" :href="post.link">{{post.title || 'Untitled'}}
+              <i-icon type="link"></i-icon>
+            </a>
+            <router-link v-else :to="{name: 'OneArticle', params: {slug: post.slug}}">{{post.title || 'Untitled'}}
+            </router-link>
+          </template>
+          <template v-else>
+            <span>{{post.title || 'Untitled'}}</span>
+          </template>
         </h1>
         <p class="create-time">
           <span>{{getTimeFormat(post.date)}}</span>
           <router-link v-if="post.categories.length" :to="{name:'Home'}">{{category}}</router-link>
-          <span v-else>No Category</span>
         </p>
       </div>
-      <div class="photos" v-if="post.photos.length">
+      <div class="photos" v-if="post.photos && post.photos.length">
         <i-carousel arrow="always">
           <i-carousel-item v-for="url in post.photos" :key="url">
             <div class="img-wrapper" @click="handleReadMoreClick(post.slug)">
@@ -29,15 +33,19 @@
           <img :src="post.cover" alt="cover"/>
         </div>
       </div>
-      <p class="description">{{description}}</p>
+      <template v-if="showExcerpt">
+        <p class="description">{{description}}</p>
+      </template>
       <div v-if="post.tags.length" class="tags">
         <i-icon type="pound"></i-icon>
         <router-link :to="{name:'Home'}" v-for="tag in post.tags" :key="tag.name">{{tag.name}}</router-link>
       </div>
-      <i-button size="small"
-                type="primary"
-                @click="handleReadMoreClick(post.slug)">More
-      </i-button>
+      <template v-if="showExcerpt">
+        <i-button size="small"
+                  type="primary"
+                  @click="handleReadMoreClick(post.slug)">More
+        </i-button>
+      </template>
     </section>
   </article>
 </template>
@@ -50,7 +58,7 @@
   import IButton from 'iview-comp/button/button.vue';
   import IIcon from 'iview-comp/icon/icon.vue';
   import IModal from 'iview-comp/modal/modal.vue';
-  import {Moment} from "moment";
+  import moment, {Moment} from "moment";
 
   @Component({
     name: 'article-card',
@@ -68,11 +76,19 @@
     })
     dateFormat: string;
 
+    @Prop({
+      'default': true
+    })
+    showExcerpt: boolean;
+
     handleReadMoreClick(slug: string) {
       this.$router.push({name: 'OneArticle', params: {slug}});
     }
 
-    getTimeFormat(date: Moment) {
+    getTimeFormat(date) {
+      if (typeof date === 'string') {
+        date = moment(date);
+      }
       return date.format(this.dateFormat);
     }
 
@@ -130,8 +146,8 @@
 
       .cover, .photos {
         margin-bottom: 1em;
-        margin-left: -2em;
-        margin-right: -2em;
+        margin-left: -3em;
+        margin-right: -3em;
 
       }
 

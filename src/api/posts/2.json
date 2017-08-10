@@ -14,7 +14,10 @@
             "keywords": null,
             "cover": null,
             "content": null,
+            "text": "This post contains 3 categories. Make sure your theme can display all of the categories.",
+            "link": "",
             "raw": null,
+            "photos": [],
             "categories": [
                 {
                     "name": "Foo",
@@ -42,7 +45,10 @@
             "keywords": null,
             "cover": null,
             "content": null,
+            "text": "This is a link post. Clicking on the link should open Google in a new tab or window.",
+            "link": "http://www.google.com/",
             "raw": null,
+            "photos": [],
             "categories": [],
             "tags": []
         },
@@ -57,7 +63,10 @@
             "keywords": null,
             "cover": null,
             "content": null,
+            "text": "This post contains 3 tags. Make sure your theme can display all of the tags.",
+            "link": "",
             "raw": null,
+            "photos": [],
             "categories": [],
             "tags": [
                 {
@@ -85,7 +94,10 @@
             "keywords": null,
             "cover": null,
             "content": null,
+            "text": "The purpose of this post is to help you make sure all of HTML elements can display properly. If you use CSS reset, don’t forget to redefine ",
+            "link": "",
             "raw": null,
+            "photos": [],
             "categories": [],
             "tags": []
         },
@@ -100,7 +112,10 @@
             "keywords": null,
             "cover": null,
             "content": null,
+            "text": "Welcome to Hexo! This is your very first post. Check documentation to learn how to use.",
+            "link": "",
             "raw": null,
+            "photos": [],
             "categories": [],
             "tags": []
         }
