@@ -11,6 +11,7 @@ import {
   Pagination
 } from "@/interfaces/appClass";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {LoadingBar} from 'iview';
 
 
 class AppState {
@@ -20,7 +21,7 @@ class AppState {
   writing: Writing = new Writing();
   categoriesAndTags: CategoryAndTags = new CategoryAndTags();
   dateTimeFormat: DateTimeFormat = new DateTimeFormat();
-  pagination: Pagination = new Pagination();
+  page: Pagination = new Pagination();
   extensions: Extensions = new Extensions();
   globalInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 }
@@ -93,8 +94,8 @@ const mutations: MutationTree<AppState> = {
       time_format: json.time_format
     };
 
-    state.pagination = {
-      ...state.pagination,
+    state.page = {
+      ...state.page,
       per_page: json.per_page,
       pagination_dir: json.pagination_dir
     };
@@ -120,10 +121,12 @@ export const Initialized_Global_App = 'Initialized_Global_App';
  */
 const actions: ActionTree<AppState, any> = {
   [Initialized_Global_App]: async ({commit, getters}) => {
+    LoadingBar.start();
     const json = await new Promise((resolve) => {
       setTimeout(() => {
+        LoadingBar.update(75);
         resolve(fetchHexoConfig());
-      }, 500);
+      }, 2000);
     });
     commit({
       type: Save_Global_Hexo_Var,
@@ -132,6 +135,7 @@ const actions: ActionTree<AppState, any> = {
     commit({
       type: Make_Sure_Initialized
     });
+    LoadingBar.finish();
   }
 };
 
@@ -139,6 +143,7 @@ const actions: ActionTree<AppState, any> = {
  * Getters Types
  */
 export const Global_Initialized$ = 'Global_Initialized$';
+export const Global_Pagination = 'Global_Pagination';
 
 /**
  * Getters
@@ -146,6 +151,9 @@ export const Global_Initialized$ = 'Global_Initialized$';
 const getters: GetterTree<AppState, any> = {
   [Global_Initialized$]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
     return state.globalInitialized;
+  },
+  [Global_Pagination]: (state: AppState) => {
+    return state.page;
   }
 };
 

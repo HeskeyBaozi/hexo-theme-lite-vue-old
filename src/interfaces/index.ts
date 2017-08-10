@@ -1,15 +1,26 @@
+import {Moment} from "moment";
+
+export interface ListPagination {
+  total: number;
+  pageSize: number;
+  pageCount: number;
+}
+
 export interface PostListItem {
   "title": string,
   "slug": string,
-  "date": string,
-  "updated": string,
+  "date": Moment,
+  "updated": Moment,
   "comments": boolean,
   "path": string,
-  "excerpt": null,
-  "keywords": null,
-  "cover": null,
-  "content": null,
-  "raw": null,
+  "excerpt": string | null,
+  "keywords": string | null,
+  "cover": string | null,
+  "text": string,
+  link: string,
+  photos: string[],
+  "content": string | null,
+  "raw": string | null,
   "categories": any[],
   "tags": any[]
 }

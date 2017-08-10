@@ -17,14 +17,19 @@ const router = new Router({
     {
       path: '/home',
       name: 'Home',
-      component: () => import('@/pages/Home.vue')
+      component: () => import('@/pages/Home.vue'),
+      meta: {
+        requireGlobalInitialized: true,
+        scrollTop: true
+      }
     },
     {
       path: '/archives',
       name: 'Archives',
       component: () => import('@/pages/Archives.vue'),
       meta: {
-        requireGlobalInitialized: true
+        requireGlobalInitialized: true,
+        scrollTop: true
       }
     },
     {
@@ -32,7 +37,8 @@ const router = new Router({
       name: 'Categories',
       component: () => import('@/pages/Categories.vue'),
       meta: {
-        requireGlobalInitialized: true
+        requireGlobalInitialized: true,
+        scrollTop: true
       }
     },
     {
@@ -40,7 +46,8 @@ const router = new Router({
       name: 'Tags',
       component: () => import('@/pages/Tags.vue'),
       meta: {
-        requireGlobalInitialized: true
+        requireGlobalInitialized: true,
+        scrollTop: true
       }
     },
     {
@@ -48,7 +55,8 @@ const router = new Router({
       name: 'OneArticle',
       component: () => import('@/pages/Article.vue'),
       meta: {
-        requireGlobalInitialized: true
+        requireGlobalInitialized: true,
+        scrollTop: true
       }
     }
   ]
@@ -57,13 +65,17 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requireGlobalInitialized)) {
     const globalInitialized$: ReplaySubject<boolean> = router.app.$store.getters[`app/${Global_Initialized$}`];
-    globalInitialized$.subscribe(isGlobalInitialized => {
-      if (isGlobalInitialized) {
-        next();
-      } else {
-        next(false);
-      }
-    });
+    globalInitialized$
+      .subscribe(isGlobalInitialized => {
+        if (isGlobalInitialized) {
+          if (to.matched.some(record => record.meta.scrollTop)) {
+            window.scrollTo(0, 0);
+          }
+          next();
+        } else {
+          next(false);
+        }
+      });
   } else {
     next();
   }

@@ -1,10 +1,21 @@
 <template>
   <div id="app">
     <top-nav></top-nav>
-    <section id="lite-avatar-info" class="shadow">
-      <img class="avatar shadow" src="./assets/6828af33.jpg" alt="avatar">
-    </section>
-    <router-view></router-view>
+    <header id="huge-background">
+      <div class="container">
+        <top-header :site="site"></top-header>
+      </div>
+    </header>
+    <main id="scroll-background">
+      <div class="container card-container">
+        <router-view></router-view>
+      </div>
+    </main>
+    <footer id="footer-background">
+      <div class="container">
+        <bottom-footer :site="site"></bottom-footer>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -12,62 +23,79 @@
   import {Component, Vue} from 'vue-property-decorator';
   import {State, namespace, Action} from 'vuex-class';
   import TopNav from '@/components/TopNav';
+  import TopHeader from '@/components/TopHeader';
+  import BottomFooter from '@/components/BottomFooter';
   import {Initialized_Global_App} from "@/store/modules/app";
   import {NavigationGuard, Route} from "vue-router";
+  import {Site} from "@/interfaces/appClass";
 
+
+  const ModuleState = namespace('app', State);
   const ModuleAction = namespace('app', Action);
 
   @Component({
     name: 'app',
     components: {
-      TopNav
+      TopNav, TopHeader, BottomFooter
     }
   })
   export default class App extends Vue {
+    @ModuleState
+    site: Site;
 
     @ModuleAction(Initialized_Global_App)
     initialize: () => Promise<any>;
 
     created() {
-      console.log('app created');
       this.initialize();
     }
   }
 </script>
-<style lang="less" src="@/my-theme/index.less"></style>
-<style lang="less" scoped>
 
+<style lang="less">
+  @import "~@/my-theme/index.less";
+  @import "~@/my-theme/mixins.less";
+
+  body {
+    .my-background;
+  }
+
+  #huge-background,
+  #footer-background {
+    // if you use .my-background here
+  }
+</style>
+<style lang="less" scoped>
   #app {
-    #lite-avatar-info {
+    #huge-background {
+      height: 62vh;
       display: flex;
       flex-flow: column nowrap;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
-      height: 30vh;
-      background-color: rgba(255, 255, 255, 0.44);
-
-      .avatar {
-        display: block;
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin: 0 auto;
-      }
-
-      .shadow {
-        box-shadow: 1px 1px 10px gray;
-      }
     }
 
-    #main-avatar {
-      margin-top: 80px;
-      background-color: white;
-      padding-left: 0;
-      padding-right: 0;
+    #footer-background {
+      padding-bottom: 1em;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      align-items: center;
     }
 
-    #main-body {
+    #scroll-background {
+      z-index: -100;
+     // background-color: white; // for a nice background picture
+    }
+
+    .card-container {
       background-color: white;
+      padding: 1em;
+      box-shadow: 0 0 5px gray;
+      transition: box-shadow 300ms;
+      &:hover {
+        box-shadow: 0 0 8px gray;
+      }
     }
   }
 </style>

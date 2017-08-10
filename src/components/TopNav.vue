@@ -1,24 +1,15 @@
 <template>
-  <div id="lite-top-nav">
-    <i-dropdown placement="bottom-start" trigger="click" transfer>
-      <l-button>
-        <span>Menu</span>
-      </l-button>
-      <i-dropdown-menu slot="list">
-        <i-dropdown-item>
-          <router-link tag="p" :to="{name:'Home'}">Home</router-link>
-        </i-dropdown-item>
-        <i-dropdown-item>
-          <router-link tag="p" :to="{name:'Archives'}">Archives</router-link>
-        </i-dropdown-item>
-        <i-dropdown-item>
-          <router-link tag="p" :to="{name:'Categories'}">Categories</router-link>
-        </i-dropdown-item>
-        <i-dropdown-item>
-          <router-link tag="p" :to="{name:'Tags'}">Tags</router-link>
-        </i-dropdown-item>
-      </i-dropdown-menu>
-    </i-dropdown>
+  <div id="lite-top-nav" class="blur top-left-padding">
+    <main class="container">
+      <i-dropdown placement="bottom-start" trigger="click" @on-click="go($event)" transfer>
+        <l-button>
+          <span>Menu</span>
+        </l-button>
+        <i-dropdown-menu slot="list">
+          <i-dropdown-item :name="item.name" v-for="item in items" :key="item.name">{{item.name}}</i-dropdown-item>
+        </i-dropdown-menu>
+      </i-dropdown>
+    </main>
   </div>
 </template>
 
@@ -39,18 +30,37 @@
   })
   export default class TopNav extends Vue {
 
+    go(name: string) {
+      this.$router.push({name});
+    }
+
+    get items() {
+      return [
+        {name: 'Home'},
+        {name: 'Archives'},
+        {name: 'Categories'},
+        {name: 'Tags'}
+      ];
+    }
   }
 </script>
 
+<style lang="less" src="@/my-theme/mixins.less"></style>
 <style lang="less" scoped>
   #lite-top-nav {
     position: fixed;
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
+    z-index: 100;
     top: 0;
     left: 0;
     right: 0;
     height: 60px;
+    background-color: white;
+
+    &:before {
+      filter: blur(6px);
+    }
   }
 </style>
