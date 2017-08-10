@@ -22,14 +22,14 @@
       <div class="photos" v-if="post.photos && post.photos.length">
         <i-carousel arrow="always">
           <i-carousel-item v-for="url in post.photos" :key="url">
-            <div class="img-wrapper" @click="handleReadMoreClick(post.slug)">
+            <div class="img-wrapper" @click="showModal(url, post)">
               <img :src="url" :alt="url"/>
             </div>
           </i-carousel-item>
         </i-carousel>
       </div>
       <div class="cover" v-else-if="post.cover">
-        <div class="img-wrapper" @click="handleReadMoreClick(post.slug)">
+        <div class="img-wrapper">
           <img :src="post.cover" alt="cover"/>
         </div>
       </div>
@@ -47,6 +47,9 @@
         </i-button>
       </template>
     </section>
+    <i-modal v-model="modal.isShow" :footerHide="true">
+      <img class="article-modal-img" :src="modal.url" alt="modal-img"/>
+    </i-modal>
   </article>
 </template>
 
@@ -57,7 +60,7 @@
   import ICarouselItem from 'iview-comp/carousel/carousel-item.vue';
   import IButton from 'iview-comp/button/button.vue';
   import IIcon from 'iview-comp/icon/icon.vue';
-  import IModal from 'iview-comp/modal/modal.vue';
+  import IModal from 'iview-comp/modal';
   import moment, {Moment} from "moment";
 
   @Component({
@@ -80,6 +83,19 @@
       'default': true
     })
     showExcerpt: boolean;
+
+    modal = {
+      isShow: false,
+      url: '',
+      post: {}
+    };
+
+    showModal(url: string, post) {
+      console.log('url', url, 'post', post);
+      this.modal.url = url;
+      this.modal.post = post;
+      this.modal.isShow = true;
+    }
 
     handleReadMoreClick(slug: string) {
       this.$router.push({name: 'OneArticle', params: {slug}});
@@ -108,6 +124,23 @@
   }
 
 </script>
+
+<style lang="less">
+
+  .ivu-modal {
+    width: min-content !important;
+
+    .article-modal-img {
+      max-width: 900px;
+    }
+
+    .article-modal-close {
+
+    }
+  }
+
+
+</style>
 
 <style lang="less" scoped>
   #article-card {

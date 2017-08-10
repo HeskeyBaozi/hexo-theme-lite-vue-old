@@ -54,26 +54,24 @@ export const Input_PageNum = 'Input_PageNum';
 const actions: ActionTree<HomeState, any> = {
   [Initialize_Home_Page]: async ({commit, getters, rootGetters}) => {
     LoadingBar.start();
-    if (!getters[Page_Initialized]) {
-      const json = await fetchPostsList();
-      const {data} = json;
+    const json = await fetchPostsList();
+    const {data} = json;
+    commit({
+      type: Save_Posts_List,
+      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+    });
+    LoadingBar.update(75);
+    if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
+      const {total, pageSize, pageCount} = json;
       commit({
-        type: Save_Posts_List,
-        list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
-      });
-      LoadingBar.update(75);
-      if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
-        const {total, pageSize, pageCount} = json;
-        commit({
-          type: Save_Posts_Pagination,
-          pagination: {total, pageSize, pageCount}
-        });
-      }
-      LoadingBar.update(95);
-      commit({
-        type: Make_Sure_Initialized
+        type: Save_Posts_Pagination,
+        pagination: {total, pageSize, pageCount}
       });
     }
+    LoadingBar.update(95);
+    commit({
+      type: Make_Sure_Initialized
+    });
     LoadingBar.finish();
   },
 
