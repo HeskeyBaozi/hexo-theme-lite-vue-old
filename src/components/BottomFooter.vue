@@ -9,8 +9,9 @@
           <i-icon type="ionic"></i-icon>
         </a>
       </div>
-      <p>Hexo Theme: Lite</p>
+      <p class="hexo-theme">Hexo Theme: Lite</p>
       <p class="title">{{site.title}}</p>
+      <p>{{site.subtitle}}</p>
     </section>
   </footer>
 </template>
@@ -38,7 +39,7 @@
     padding: 2em;
     background-color: white;
     &:before {
-      filter: blur(10px);
+      filter: blur(40px);
     }
 
     .footer-description {
@@ -52,8 +53,12 @@
         }
       }
 
+      .hexo-theme {
+        font-size: 0.8em;
+      }
+
       .title {
-        font-size: 1.2em;
+        font-size: 1.5em;
       }
     }
   }

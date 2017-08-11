@@ -2,8 +2,10 @@
   <div id="lite-avatar-info" class="blur">
     <div class="avatar-info basic-container">
       <img class="avatar shadow" src="../assets/6828af33.jpg" alt="avatar">
-      <p>{{site.author}}</p>
-      <p>{{site.description}}</p>
+      <div class="head-description">
+        <p class="author-name">{{site.author}}</p>
+        <p class="description">{{site.description}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -11,12 +13,9 @@
 <script lang="ts">
   import {Component, Prop, Vue} from 'vue-property-decorator';
   import {Site} from "@/interfaces/appClass";
-  import IRow from 'iview-comp/grid/row.vue';
-  import ICol from 'iview-comp/grid/col.vue';
 
   @Component({
-    name: 'top-header',
-    components: {IRow, ICol}
+    name: 'top-header'
   })
   export default class TopHeader extends Vue {
     @Prop({
@@ -35,6 +34,17 @@
     &:before {
       filter: blur(10px);
     }
+
+    .head-description {
+      text-shadow: 0 0 5px white;
+      .author-name {
+        font-size: 1.2em;
+      }
+
+      .description {
+        font-size: 0.9em;
+      }
+    }
   }
 
   .basic-container {
@@ -49,10 +59,6 @@
     }
   }
 
-  .site-info {
-    text-shadow: 0 0 1px rgba(255, 255, 255, 0.68);
-  }
-
   .avatar-info {
     .avatar {
       display: block;
@@ -61,8 +67,6 @@
       border-radius: 50%;
       transition: all 600ms;
     }
-
-    text-shadow: 0 0 10px white;
 
     .shadow {
       box-shadow: 1px 1px 3px white;
