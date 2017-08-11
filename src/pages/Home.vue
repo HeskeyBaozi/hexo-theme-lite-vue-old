@@ -21,6 +21,7 @@
   import ArticleCard from '@/components/ArticleCard';
   import IPage from 'iview-comp/page/page.vue';
   import {Moment} from "moment";
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleAction = namespace('home', Action);
   const ModuleState = namespace('home', State);
@@ -49,6 +50,10 @@
 
     @AppState
     dateTimeFormat: DateTimeFormat;
+
+    asyncData({store, route}): Promise<void> {
+      return store.dispatch(`app/${Initialized_Global_App}`);
+    }
 
 
     created() {

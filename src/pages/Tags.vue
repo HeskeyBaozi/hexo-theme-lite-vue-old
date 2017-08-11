@@ -13,6 +13,7 @@
   import BoxList from '@/components/BoxList';
   import {TagItem} from "@/interfaces/index";
   import {Initialize_Tags_Page} from "@/store/modules/tags";
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleAction = namespace('tags', Action);
   const ModuleState = namespace('tags', State);
@@ -29,8 +30,11 @@
     @ModuleAction(Initialize_Tags_Page)
     initialize: () => Promise<any>;
 
+    asyncData({store, route}): Promise<void> {
+      return store.dispatch(`app/${Initialized_Global_App}`);
+    }
+
     created() {
-      console.log('tags created');
       this.initialize();
     }
   }

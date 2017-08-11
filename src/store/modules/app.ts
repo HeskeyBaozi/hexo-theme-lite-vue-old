@@ -23,7 +23,7 @@ class AppState {
   dateTimeFormat: DateTimeFormat = new DateTimeFormat();
   page: Pagination = new Pagination();
   extensions: Extensions = new Extensions();
-  globalInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
+  globalInitialized: boolean = false;
 }
 
 /**
@@ -107,8 +107,7 @@ const mutations: MutationTree<AppState> = {
     };
   },
   [Make_Sure_Initialized]: state => {
-    state.globalInitialized.next(true);
-    state.globalInitialized.complete();
+    state.globalInitialized = true;
   }
 };
 
@@ -120,21 +119,23 @@ export const Initialized_Global_App = 'Initialized_Global_App';
  * Actions
  */
 const actions: ActionTree<AppState, any> = {
-  [Initialized_Global_App]: async ({commit, getters}) => {
+  [Initialized_Global_App]: async ({commit, getters}): Promise<void> => {
     LoadingBar.start();
-    const json = await new Promise((resolve) => {
-      setTimeout(() => {
-        LoadingBar.update(75);
-        resolve(fetchHexoConfig());
-      }, 2000);
-    });
-    commit({
-      type: Save_Global_Hexo_Var,
-      json
-    });
-    commit({
-      type: Make_Sure_Initialized
-    });
+    if (!getters[Global_Initialized]) {
+      const json = await new Promise((resolve) => {
+        setTimeout(() => {
+          LoadingBar.update(75);
+          resolve(fetchHexoConfig());
+        }, 10000);
+      });
+      commit({
+        type: Save_Global_Hexo_Var,
+        json
+      });
+      commit({
+        type: Make_Sure_Initialized
+      });
+    }
     LoadingBar.finish();
   }
 };
@@ -142,14 +143,14 @@ const actions: ActionTree<AppState, any> = {
 /**
  * Getters Types
  */
-export const Global_Initialized$ = 'Global_Initialized$';
+export const Global_Initialized = 'Global_Initialized';
 export const Global_Pagination = 'Global_Pagination';
 
 /**
  * Getters
  */
 const getters: GetterTree<AppState, any> = {
-  [Global_Initialized$]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
+  [Global_Initialized]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
     return state.globalInitialized;
   },
   [Global_Pagination]: (state: AppState) => {

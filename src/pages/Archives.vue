@@ -45,6 +45,7 @@
   import ITimelineItem from 'iview-comp/timeline/timeline-item.vue';
   import IIcon from 'iview-comp/icon/icon.vue';
   import IPage from 'iview-comp/page/page.vue';
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleState = namespace('archives', State);
   const AppState = namespace('app', State);
@@ -54,7 +55,8 @@
 
   @Component({
     name: 'archives',
-    components: {ITimeline, ITimelineItem, IIcon, IPage}
+    components: {ITimeline, ITimelineItem, IIcon, IPage},
+
   })
   export default class Archives extends Vue {
     @ModuleState
@@ -75,15 +77,18 @@
     @ModuleGetter(Time_Line_List)
     timeline;
 
+    @ModuleAction(Initialize_Archives_Page)
+    initialize: (payload: { pageNum: number }) => Promise<any>;
+
+    asyncData({store, route}): Promise<void> {
+      return store.dispatch(`app/${Initialized_Global_App}`);
+    }
+
     getDate(date: string) {
       return Moment(date).format(this.dateTimeFormat.date_format);
     }
 
-    @ModuleAction(Initialize_Archives_Page)
-    initialize: (payload: { pageNum: number }) => Promise<any>;
-
     created() {
-      console.log('Archives created');
       this.initialize({pageNum: 1});
     }
 

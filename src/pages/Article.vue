@@ -19,6 +19,7 @@
   import ArticleContent from '@/components/ArticleContent';
   import ArticleCard from '@/components/ArticleCard';
   import {DateTimeFormat} from "@/interfaces/appClass";
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleState = namespace('article', State);
   const ModuleAction = namespace('article', Action);
@@ -37,6 +38,10 @@
 
     @ModuleAction(Initialize_Article_Page)
     initialize: (payload: { slug: string }) => Promise<any>;
+
+    asyncData({store, route}): Promise<void> {
+      return store.dispatch(`app/${Initialized_Global_App}`);
+    }
 
     created() {
       /**

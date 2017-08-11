@@ -13,6 +13,7 @@
   import {Initialize_Categories_Page} from "@/store/modules/categories";
   import {CategoryItem} from '@/interfaces';
   import BoxList from '@/components/BoxList';
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleAction = namespace('categories', Action);
   const ModuleState = namespace('categories', State);
@@ -29,8 +30,11 @@
     @ModuleState
     categoriesList: CategoryItem[];
 
+    asyncData({store, route}): Promise<void> {
+      return store.dispatch(`app/${Initialized_Global_App}`);
+    }
+
     created() {
-      console.log('categories created');
       this.initialize();
     }
   }

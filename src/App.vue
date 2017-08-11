@@ -42,13 +42,6 @@
   export default class App extends Vue {
     @ModuleState
     site: Site;
-
-    @ModuleAction(Initialized_Global_App)
-    initialize: () => Promise<any>;
-
-    created() {
-      this.initialize();
-    }
   }
 </script>
 
