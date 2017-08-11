@@ -6,47 +6,44 @@ export interface ListPagination {
   pageCount: number;
 }
 
-export interface PostListItem {
-  "title": string,
-  "slug": string,
-  "date": Moment,
-  "updated": Moment,
-  "comments": boolean,
-  "path": string,
-  "excerpt": string | null,
-  "keywords": string | null,
-  "cover": string | null,
-  "text": string,
-  link: string,
-  photos: string[],
-  "content": string | null,
-  "raw": string | null,
-  "categories": any[],
-  "tags": any[]
-}
-
-export interface TagItem {
-  name: string,
-  path: string,
-  count: number
-}
-
-export interface CategoryItem {
-  name: string,
-  path: string,
-  count: number
-}
-
-export interface Article {
+export interface BasicPost {
   title: string,
   slug: string,
-  date: string,
-  updated: string,
+  date: Moment,
+  updated: Moment,
   comments: boolean,
   path: string,
   excerpt: string | null,
+  categories: BasicItem[],
+  tags: BasicItem[],
+  photos: string[],
+  link: string
+}
+
+export interface PostListItem extends BasicPost {
+  keywords: string | null,
+  cover: string | null,
+  text: string,
+  content: string | null,
+  raw: string | null,
+}
+
+export interface Article extends BasicPost {
   covers: string[] | null,
   content: string,
-  categories: { name: string, path: string }[],
-  tags: { name: string, path: string }[]
 }
+
+export interface BasicItem {
+  name: string,
+  path: string
+}
+
+export interface TagItem extends BasicItem {
+  count: number
+}
+
+export interface CategoryItem extends BasicItem {
+  count: number
+}
+
+

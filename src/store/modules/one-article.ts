@@ -1,18 +1,21 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {Article} from "@/interfaces";
 import {fetchPostBySlug} from '@/api';
+import moment from 'moment';
 
 class ArticleState {
   article: Article = {
     title: '',
     slug: '',
-    date: '',
-    updated: '',
+    date: moment(),
+    updated: moment(),
     comments: false,
     path: '',
     excerpt: null,
     covers: null,
     content: '',
+    photos: [],
+    link: '',
     categories: [],
     tags: []
   };

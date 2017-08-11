@@ -56,6 +56,7 @@
 <style lang="less" scoped>
   #lite-article {
     .article-footer {
+      margin: 1em 0;
       font-size: 0.8em;
       font-style: italic;
       text-align: center;

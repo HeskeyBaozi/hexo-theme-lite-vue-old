@@ -55,7 +55,7 @@
 
 <script lang="ts">
   import {Component, Vue, Prop} from 'vue-property-decorator';
-  import {PostListItem} from "@/interfaces/index";
+  import {Article, PostListItem} from "@/interfaces/index";
   import ICarousel from 'iview-comp/carousel/carousel.vue';
   import ICarouselItem from 'iview-comp/carousel/carousel-item.vue';
   import IButton from 'iview-comp/button/button.vue';
@@ -109,7 +109,7 @@
     }
 
     get description() {
-      const text = /*this.post.excerpt ? this.post.excerpt :*/ this.post.text;
+      const text = this.post.excerpt ? this.post.excerpt : this.post.text;
       return text + '...';
     }
 

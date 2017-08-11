@@ -68,7 +68,7 @@
 <style lang="less" scoped>
   #app {
     #huge-background {
-      height: 62vh;
+      height: 38vh;
       display: flex;
       flex-flow: column nowrap;
       justify-content: flex-end;
