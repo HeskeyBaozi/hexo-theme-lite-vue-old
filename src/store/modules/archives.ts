@@ -51,24 +51,22 @@ export const Input_PageNum = 'Input_PageNum';
  */
 const actions: ActionTree<ArchivesState, any> = {
   [Initialize_Archives_Page]: async ({commit, getters, rootGetters}) => {
-    if (!getters[Page_Initialized]) {
-      const json = await fetchPostsList();
-      const {data} = json;
+    const json = await fetchPostsList();
+    const {data} = json;
+    commit({
+      type: Save_Posts_List,
+      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+    });
+    if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
+      const {total, pageSize, pageCount} = json;
       commit({
-        type: Save_Posts_List,
-        list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
-      });
-      if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
-        const {total, pageSize, pageCount} = json;
-        commit({
-          type: Save_Posts_Pagination,
-          pagination: {total, pageSize, pageCount}
-        });
-      }
-      commit({
-        type: Make_Sure_Initialized
+        type: Save_Posts_Pagination,
+        pagination: {total, pageSize, pageCount}
       });
     }
+    commit({
+      type: Make_Sure_Initialized
+    });
   },
 
   [Input_PageNum]: async ({commit}, payload: { pageNum: number }) => {
@@ -76,7 +74,7 @@ const actions: ActionTree<ArchivesState, any> = {
     const {data} = json;
     commit({
       type: Save_Posts_List,
-      list: data
+      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
   }
 };
@@ -86,6 +84,7 @@ const actions: ActionTree<ArchivesState, any> = {
  * Getters Types
  */
 export const Page_Initialized = 'Page_Initialized';
+export const Time_Line_List = 'Time_Line_List';
 
 /**
  * Getters
@@ -93,6 +92,18 @@ export const Page_Initialized = 'Page_Initialized';
 const getters: GetterTree<ArchivesState, any> = {
   [Page_Initialized]: (state: ArchivesState, getters: any, rootState: any, rootGetters: any): boolean => {
     return state.pageInitialized;
+  },
+  [Time_Line_List]: (state: ArchivesState, getters: any, rootState: any, rootGetters: any) => {
+    const result = {};
+    for (let post of state.postsList) {
+      let yearAndMonth: string = `${post.date.year()}-${post.date.month() + 1}`;
+      if (result[yearAndMonth]) {
+        result[yearAndMonth].push(post);
+      } else {
+        result[yearAndMonth] = [post];
+      }
+    }
+    return result;
   }
 };
 

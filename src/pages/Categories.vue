@@ -1,12 +1,11 @@
 <template>
   <div id="lite-categories">
-    categories
+    <h1 class="lite-categories-leading">Categories</h1>
   </div>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Vue} from 'vue-property-decorator';
   import {State, namespace, Action} from 'vuex-class';
   import {Initialize_Categories_Page} from "@/store/modules/categories";
   import {CategoryItem} from '@/interfaces';
@@ -27,3 +26,12 @@
     }
   }
 </script>
+
+<style lang="less" scoped>
+  #lite-categories {
+    .lite-categories-leading {
+      font-size: 1.5em;
+      text-align: center;
+    }
+  }
+</style>
