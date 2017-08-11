@@ -1,5 +1,10 @@
 import {Module, MutationTree, ActionTree, ActionContext, GetterTree} from 'vuex';
 
+class State {
+  msg = 'hello';
+}
+
+
 const mutations: MutationTree<State> = {
   saveMsg: (state: State, payload: any) => {
     state.msg = payload.msg;
@@ -30,6 +35,3 @@ export class HelloModule implements Module<State, any> {
   actions = actions;
 }
 
-class State {
-  msg = 'hello';
-}

@@ -1,6 +1,20 @@
-# theme-lite
+# Lite
 
-> A Vue.js project
+> A Hexo Theme inspired by [Clean-Blog](https://github.com/klugjo/hexo-theme-clean-blog), [Laughing](https://github.com/BoizZ/hexo-theme-laughing), and [Material](https://github.com/viosey/hexo-theme-material).
+
+## Preview
+
+`/home`
+
+![home](./docs/home.png)
+
+`/archives`
+
+![archives](./docs/archives.png)
+
+`/categories`
+
+![categories](./docs/categories.png)
 
 ## Build Setup
 

@@ -21,7 +21,8 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js', '.vue', '.json'],
     alias: {
-      '@': resolve('src')
+      '@': resolve('src'),
+      'iview-comp': 'iview/src/components'
     }
   },
   module: {
@@ -30,6 +31,10 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
+      },
+      {
+        test: /iview.src.*?js$/,
+        loader: 'babel-loader'
       },
       {
         test: /\.js$/,

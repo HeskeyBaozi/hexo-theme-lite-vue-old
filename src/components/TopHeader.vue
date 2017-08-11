@@ -1,0 +1,75 @@
+<template>
+  <div id="lite-avatar-info" class="blur">
+    <div class="avatar-info basic-container">
+      <img class="avatar shadow" src="../assets/6828af33.jpg" alt="avatar">
+      <div class="head-description">
+        <p class="author-name">{{site.author}}</p>
+        <p class="description">{{site.description}}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+  import {Component, Prop, Vue} from 'vue-property-decorator';
+  import {Site} from "@/interfaces/appClass";
+
+  @Component({
+    name: 'top-header'
+  })
+  export default class TopHeader extends Vue {
+    @Prop({
+      required: true,
+      type: Object
+    })
+    site: Site;
+  }
+</script>
+
+<style lang="less" src="@/my-theme/mixins.less"></style>
+<style lang="less" scoped>
+  #lite-avatar-info {
+    padding: 1em;
+    background-color: white;
+    &:before {
+      filter: blur(10px);
+    }
+
+    .head-description {
+      text-shadow: 0 0 5px white;
+      .author-name {
+        font-size: 1.2em;
+      }
+
+      .description {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  .basic-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+    > * {
+      margin-bottom: .3em;
+    }
+  }
+
+  .avatar-info {
+    .avatar {
+      display: block;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      transition: all 600ms;
+    }
+
+    .shadow {
+      box-shadow: 1px 1px 3px white;
+    }
+  }
+</style>
