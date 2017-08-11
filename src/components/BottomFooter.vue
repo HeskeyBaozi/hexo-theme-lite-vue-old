@@ -10,7 +10,7 @@
         </a>
       </div>
       <p class="hexo-theme">Hexo Theme: Lite</p>
-      <p class="title">{{site.title}}</p>
+      <router-link :to="{name: 'Home'}" class="title">{{site.title}}</router-link>
       <p>{{site.subtitle}}</p>
     </section>
   </footer>
