@@ -16,7 +16,7 @@
         </h1>
         <p class="create-time">
           <span>{{getTimeFormat(post.date)}}</span>
-          <router-link v-if="post.categories.length" :to="{name:'Home'}">{{category}}</router-link>
+          <router-link v-if="post.categories.length" :to="{name:'OneCategory', params: {category_name: category}}">{{category}}</router-link>
         </p>
       </div>
       <div class="photos" v-if="post.photos && post.photos.length">
@@ -38,7 +38,7 @@
       </template>
       <div v-if="post.tags.length" class="tags">
         <i-icon type="pound"></i-icon>
-        <router-link :to="{name:'Home'}" v-for="tag in post.tags" :key="tag.name">{{tag.name}}</router-link>
+        <router-link :to="{name:'OneTag', params: {tag_name: tag.name}}" v-for="tag in post.tags" :key="tag.name">{{tag.name}}</router-link>
       </div>
       <template v-if="showExcerpt">
         <i-button size="small"

@@ -3,6 +3,7 @@
     <h1 class="lite-archives-leading">Archives</h1>
     <i-timeline>
       <i-timeline-item class="article-item" v-for="(value, key) in timeline" :key="key">
+        <i-icon type="ios-clock-outline" slot="dot"></i-icon>
         <h1 class="article-year">{{key}}</h1>
         <div class="article-meta" v-for="post in value" :key="post.slug">
           <p class="article-date">{{post.date.format('MM-DD')}}</p>
@@ -21,7 +22,7 @@
         </div>
       </i-timeline-item>
       <i-timeline-item>
-        <i-icon type="trophy" slot="dot"></i-icon>
+        <i-icon type="ios-browsers-outline" slot="dot"></i-icon>
         <p>{{page.per_page ? pagination.total : postsList.length}} article(s) in total.</p>
       </i-timeline-item>
     </i-timeline>
