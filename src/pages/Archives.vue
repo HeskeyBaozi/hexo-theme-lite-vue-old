@@ -117,8 +117,8 @@
         margin-bottom: 1em;
 
         .article-date {
-          width: 3em;
-          margin-right: 1em;
+          width: 5em;
+          margin-right: .5em;
           font-style: italic;
           color: #8e8e8e;
         }

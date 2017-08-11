@@ -33,7 +33,7 @@
     padding: 1em;
     background-color: white;
     &:before {
-      filter: blur(6px);
+      filter: blur(10px);
     }
   }
 
