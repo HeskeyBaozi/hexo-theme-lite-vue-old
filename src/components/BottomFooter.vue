@@ -39,7 +39,7 @@
     padding: 2em;
     background-color: white;
     &:before {
-      filter: blur(40px);
+      filter: blur(10px);
     }
 
     .footer-description {

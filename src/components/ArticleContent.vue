@@ -249,10 +249,6 @@
     }
 
     blockquote {
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: center;
-      align-items: center;
       border-left: 4px solid #808080;
       padding: 0 15px;
       color: #777;
@@ -264,6 +260,16 @@
 
     blockquote > :last-child {
       margin-bottom: 0;
+    }
+
+    blockquote.pullquote.left {
+      width: 50%;
+      float: left;
+    }
+
+    blockquote.pullquote.right {
+      width: 50%;
+      float: right;
     }
 
     code, tt {
