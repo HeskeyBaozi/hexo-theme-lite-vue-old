@@ -43,9 +43,7 @@
        * Subscribe the url
        */
       this.$watch('$route.params.slug', (newSlug: string, oldSlug: string) => {
-        this.initialize({slug: newSlug})
-          .then(() => {
-          });
+        this.initialize({slug: newSlug});
       }, {
         immediate: true
       });

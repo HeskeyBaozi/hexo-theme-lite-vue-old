@@ -1,6 +1,9 @@
 <template>
   <div id="lite-categories">
     <h1 class="lite-categories-leading">Categories</h1>
+    <box-list :boxes="categoriesList"
+              type="categories"></box-list>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -9,16 +12,22 @@
   import {State, namespace, Action} from 'vuex-class';
   import {Initialize_Categories_Page} from "@/store/modules/categories";
   import {CategoryItem} from '@/interfaces';
+  import BoxList from '@/components/BoxList';
 
   const ModuleAction = namespace('categories', Action);
+  const ModuleState = namespace('categories', State);
 
   @Component({
-    name: 'categories'
+    name: 'categories',
+    components: {BoxList}
   })
   export default class Categories extends Vue {
 
     @ModuleAction(Initialize_Categories_Page)
     initialize: () => Promise<any>;
+
+    @ModuleState
+    categoriesList: CategoryItem[];
 
     created() {
       console.log('categories created');

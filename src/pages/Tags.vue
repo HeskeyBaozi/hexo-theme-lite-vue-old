@@ -1,32 +1,25 @@
 <template>
   <div id="lite-tags">
-    <section class="tags-list">
-      <i-badge v-for="tag in tagsList" :key="tag.path" :count="tag.count">
-        <i-tag type="border">{{tag.name}}</i-tag>
-      </i-badge>
-
-    </section>
+    <h1 class="lite-tags-leading">Tags</h1>
+    <box-list :boxes="tagsList"
+              type="tags"></box-list>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Vue} from 'vue-property-decorator';
   import {State, namespace, Action} from 'vuex-class';
+  import BoxList from '@/components/BoxList';
+  import {TagItem} from "@/interfaces/index";
   import {Initialize_Tags_Page} from "@/store/modules/tags";
-  import {TagItem} from '@/interfaces';
-  import ITag from 'iview-comp/tag';
-  import IBadge from 'iview-comp/badge';
-
 
   const ModuleAction = namespace('tags', Action);
   const ModuleState = namespace('tags', State);
 
   @Component({
     name: 'tags',
-    components: {
-      ITag, IBadge
-    }
+    components: {BoxList}
   })
   export default class Tags extends Vue {
     @ModuleState
@@ -42,3 +35,12 @@
     }
   }
 </script>
+
+<style lang="less" scoped>
+  #lite-tags {
+    .lite-tags-leading {
+      font-size: 1.5em;
+      text-align: center;
+    }
+  }
+</style>

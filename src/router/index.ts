@@ -39,7 +39,14 @@ const router = new Router({
       meta: {
         requireGlobalInitialized: true,
         scrollTop: true
-      }
+      },
+      children: [
+        {
+          path: ':category_name',
+          name: 'OneCategory',
+          component: () => import('@/pages/CategoryItemList.vue')
+        }
+      ]
     },
     {
       path: '/tags',
@@ -48,7 +55,14 @@ const router = new Router({
       meta: {
         requireGlobalInitialized: true,
         scrollTop: true
-      }
+      },
+      children: [
+        {
+          path: ':tag_name',
+          name: 'OneTag',
+          component: () => import('@/pages/TagItemList.vue')
+        }
+      ]
     },
     {
       path: '/articles/:slug',

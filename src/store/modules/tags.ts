@@ -1,9 +1,10 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
-import {TagItem} from "@/interfaces";
-import {fetchAllTags} from '@/api';
+import {PostListItem, TagItem} from "@/interfaces";
+import {fetchAllTags, fetchPostsListByTag} from '@/api';
 
 class TagsState {
   tagsList: TagItem[] = [];
+  relatedPosts: PostListItem[] = [];
   pageInitialized = false;
 }
 
@@ -11,6 +12,7 @@ class TagsState {
  * Mutations Types
  */
 const Save_Tags_List = 'Save_Tags_List';
+const Save_Related_Posts = 'Save_Related_Posts';
 const Make_Sure_Initialized = 'Make_Sure_Initialized';
 
 /**
@@ -22,6 +24,9 @@ const mutations: MutationTree<TagsState> = {
   },
   [Make_Sure_Initialized]: (state) => {
     state.pageInitialized = true;
+  },
+  [Save_Related_Posts]: (state, payload: { list: PostListItem[] }) => {
+    state.relatedPosts = payload.list;
   }
 };
 
@@ -29,6 +34,7 @@ const mutations: MutationTree<TagsState> = {
  * Actions Types
  */
 export const Initialize_Tags_Page = 'Initialize_Tags_Page';
+export const Initialize_Related_Posts = 'Initialize_Related_Posts';
 /**
  * Actions
  */
@@ -44,6 +50,14 @@ const actions: ActionTree<TagsState, any> = {
         type: Make_Sure_Initialized
       });
     }
+  },
+  [Initialize_Related_Posts]: async ({commit}, payload: { tag_name: string }) => {
+    const json = await fetchPostsListByTag(payload.tag_name);
+    const {name, postlist} = json;
+    commit({
+      type: Save_Related_Posts,
+      list: postlist
+    });
   }
 };
 

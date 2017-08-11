@@ -1,9 +1,10 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
-import {CategoryItem} from "@/interfaces";
-import {fetchAllCategories} from '@/api';
+import {CategoryItem, PostListItem} from "@/interfaces";
+import {fetchAllCategories, fetchPostsListByCategory} from '@/api';
 
 class CategoriesState {
   categoriesList: CategoryItem[] = [];
+  relatedPosts: PostListItem[] = [];
   pageInitialized = false;
 }
 
@@ -11,6 +12,7 @@ class CategoriesState {
  * Mutations Types
  */
 const Save_Categories_List = 'Save_Categories_List';
+const Save_Related_Posts = 'Save_Related_Posts';
 const Make_Sure_Initialized = 'Make_Sure_Initialized';
 
 /**
@@ -22,6 +24,9 @@ const mutations: MutationTree<CategoriesState> = {
   },
   [Make_Sure_Initialized]: (state) => {
     state.pageInitialized = true;
+  },
+  [Save_Related_Posts]: (state, payload: { list: PostListItem[] }) => {
+    state.relatedPosts = payload.list;
   }
 };
 
@@ -29,6 +34,7 @@ const mutations: MutationTree<CategoriesState> = {
  * Actions Types
  */
 export const Initialize_Categories_Page = 'Initialize_Categories_Page';
+export const Initialize_Related_Posts = 'Initialize_Related_Posts';
 /**
  * Actions
  */
@@ -44,6 +50,14 @@ const actions: ActionTree<CategoriesState, any> = {
         type: Make_Sure_Initialized
       });
     }
+  },
+  [Initialize_Related_Posts]: async ({commit}, payload: { category_name: string }) => {
+    const json = await fetchPostsListByCategory(payload.category_name);
+    const {name, postlist} = json;
+    commit({
+      type: Save_Related_Posts,
+      list: postlist
+    });
   }
 };
 
