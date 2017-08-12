@@ -1,8 +1,7 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {ListPagination, PostListItem} from "@/interfaces";
 import {fetchPostsListByPageNumber, fetchPostsList} from '@/api';
-import {Global_Pagination} from '@/store/modules/app';
-import {LoadingBar} from 'iview';
+import {Global_Pagination, Initialized_Global_App} from '@/store/modules/app';
 import moment from 'moment';
 
 
@@ -52,15 +51,14 @@ export const Input_PageNum = 'Input_PageNum';
  * Actions
  */
 const actions: ActionTree<HomeState, any> = {
-  [Initialize_Home_Page]: async ({commit, getters, rootGetters}) => {
-    LoadingBar.start();
+  [Initialize_Home_Page]: async ({dispatch, commit, rootGetters}) => {
+    await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
     const json = await fetchPostsList();
     const {data} = json;
     commit({
       type: Save_Posts_List,
       list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
-    LoadingBar.update(75);
     if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
       const {total, pageSize, pageCount} = json;
       commit({
@@ -68,29 +66,23 @@ const actions: ActionTree<HomeState, any> = {
         pagination: {total, pageSize, pageCount}
       });
     }
-    LoadingBar.update(95);
     commit({
       type: Make_Sure_Initialized
     });
-    LoadingBar.finish();
   },
 
   [Input_PageNum]: async ({commit}, payload: { pageNum: number }) => {
-    LoadingBar.start();
     console.log('number', payload.pageNum);
     const json = await fetchPostsListByPageNumber(payload.pageNum);
     const {data, total, pageSize, pageCount} = json;
-    LoadingBar.update(70);
     commit({
       type: Save_Posts_List,
       list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
-    LoadingBar.update(90);
     commit({
       type: Save_Posts_Pagination,
       pagination: {total, pageSize, pageCount}
     });
-    LoadingBar.finish();
   }
 };
 

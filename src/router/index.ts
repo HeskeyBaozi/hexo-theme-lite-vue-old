@@ -74,33 +74,5 @@ export function createRouter() {
     ]
   });
 
-  router.beforeEach((to, from, next) => {
-    /*
-    const globalInitialized$: ReplaySubject<boolean> = router.app.$store.getters[`app/${Global_Initialized$}`];
-    globalInitialized$
-      .subscribe(isGlobalInitialized => {
-        console.log(3);
-        if (isGlobalInitialized) {
-          console.log(4);
-          if (to.matched.some(record => record.meta.scrollTop)) {
-            console.log(5);
-            window.scrollTo(0, 0);
-          }
-          console.log(6);
-          next();
-        } else {
-          console.log(7);
-          next(false);
-        }
-      });
-      */
-
-    if (to.matched.some(record => record.meta.scrollTop)) {
-      window.scrollTo(0, 0);
-      next();
-    }
-
-  });
-
   return router;
 }

@@ -22,7 +22,6 @@
   import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleState = namespace('article', State);
-  const ModuleAction = namespace('article', Action);
   const AppState = namespace('app', State);
 
   @Component({
@@ -36,23 +35,10 @@
     @AppState
     dateTimeFormat: DateTimeFormat;
 
-    @ModuleAction(Initialize_Article_Page)
-    initialize: (payload: { slug: string }) => Promise<any>;
-
-    asyncData({store, route}): Promise<void> {
-      return store.dispatch(`app/${Initialized_Global_App}`);
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug});
     }
 
-    created() {
-      /**
-       * Subscribe the url
-       */
-      this.$watch('$route.params.slug', (newSlug: string, oldSlug: string) => {
-        this.initialize({slug: newSlug});
-      }, {
-        immediate: true
-      });
-    }
   }
 </script>
 

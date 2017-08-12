@@ -1,15 +1,21 @@
 import {createApp} from './main';
 import Vue from 'vue';
+import {LoadingBar} from 'iview';
 
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
-  beforeRouteUpdate(this: any, to, from, next) {
+  async beforeRouteUpdate(this: any, to, from, next) {
     const {asyncData} = this.$options;
     if (asyncData) {
-      asyncData({
-        store: this.$store,
-        route: to
-      }).then(next).catch(next)
+      try {
+        await asyncData({
+          store: this.$store,
+          route: to
+        });
+        next();
+      } catch (error) {
+        next(error);
+      }
     } else {
       next();
     }
@@ -19,12 +25,19 @@ Vue.mixin({
 const {app, router, store} = createApp();
 declare const window: any;
 
+// prime the store with server-initialized state.
+// the state is determined during SSR and inlined in the page markup.
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__);
 }
 
 
-router.onReady(() => {
+router.onReady(async () => {
+
+  // Add router hook for handling asyncData.
+  // Doing it after initial route is resolved so that we don't double-fetch
+  // the data that we already have. Using router.beforeResolve() so that all
+  // async components are resolved.
 
   router.beforeResolve(async (to, from, next) => {
     const matched = router.getMatchedComponents(to);
@@ -39,13 +52,33 @@ router.onReady(() => {
     }
 
     try {
+      LoadingBar.start();
       await Promise.all(asyncDataHooks.map(hook => hook({store, route: to})));
+      LoadingBar.finish();
+
+      if (to.matched.some(record => record.meta.scrollTop)) {
+        window.scrollTo(0, 0);
+      }
       next();
     } catch (error) {
+      LoadingBar.error();
       next(error);
     }
   });
+
+  // actually mount to DOM
   app.$mount('#app');
+
+  // fetch initial state
+  const initMatched = router.getMatchedComponents(router.currentRoute);
+  const asyncDataHooks = initMatched.map((c: any) => c.asyncData || c.options.asyncData).filter(_ => _);
+  try {
+    LoadingBar.start();
+    await Promise.all(asyncDataHooks.map(hook => hook({store, route: router.currentRoute})));
+    LoadingBar.finish();
+  } catch (error) {
+    LoadingBar.error();
+  }
 });
 
 

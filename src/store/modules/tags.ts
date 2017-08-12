@@ -1,6 +1,7 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {PostListItem, TagItem} from "@/interfaces";
 import {fetchAllTags, fetchPostsListByTag} from '@/api';
+import {Initialized_Global_App} from "@/store/modules/app";
 
 class TagsState {
   tagsList: TagItem[] = [];
@@ -39,8 +40,9 @@ export const Initialize_Related_Posts = 'Initialize_Related_Posts';
  * Actions
  */
 const actions: ActionTree<TagsState, any> = {
-  [Initialize_Tags_Page]: async ({commit, getters}) => {
+  [Initialize_Tags_Page]: async ({dispatch, commit, getters}) => {
     if (!getters[Page_Initialized]) {
+      await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
       const json = await fetchAllTags();
       commit({
         type: Save_Tags_List,

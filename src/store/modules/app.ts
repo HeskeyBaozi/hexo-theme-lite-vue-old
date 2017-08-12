@@ -10,8 +10,6 @@ import {
   Extensions,
   Pagination
 } from "@/interfaces/appClass";
-import {ReplaySubject} from "rxjs/ReplaySubject";
-import {LoadingBar} from 'iview';
 
 
 class AppState {
@@ -120,11 +118,9 @@ export const Initialized_Global_App = 'Initialized_Global_App';
  */
 const actions: ActionTree<AppState, any> = {
   [Initialized_Global_App]: async ({commit, getters}): Promise<void> => {
-    LoadingBar.start();
     if (!getters[Global_Initialized]) {
       const json = await new Promise((resolve) => {
         setTimeout(() => {
-          LoadingBar.update(75);
           resolve(fetchHexoConfig());
         }, 10000);
       });
@@ -136,7 +132,6 @@ const actions: ActionTree<AppState, any> = {
         type: Make_Sure_Initialized
       });
     }
-    LoadingBar.finish();
   }
 };
 

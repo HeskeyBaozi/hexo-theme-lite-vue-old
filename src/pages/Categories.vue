@@ -24,19 +24,13 @@
   })
   export default class Categories extends Vue {
 
-    @ModuleAction(Initialize_Categories_Page)
-    initialize: () => Promise<any>;
-
     @ModuleState
     categoriesList: CategoryItem[];
 
-    asyncData({store, route}): Promise<void> {
-      return store.dispatch(`app/${Initialized_Global_App}`);
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`categories/${Initialize_Categories_Page}`);
     }
 
-    created() {
-      this.initialize();
-    }
   }
 </script>
 

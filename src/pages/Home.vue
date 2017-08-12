@@ -33,9 +33,6 @@
     components: {ArticleCard, IPage}
   })
   export default class Home extends Vue {
-    @ModuleAction(Initialize_Home_Page)
-    initialize: () => Promise<any>;
-
     @ModuleAction(Input_PageNum)
     inputPageNum: (payload: { pageNum: number }) => Promise<any>;
 
@@ -51,14 +48,10 @@
     @AppState
     dateTimeFormat: DateTimeFormat;
 
-    asyncData({store, route}): Promise<void> {
-      return store.dispatch(`app/${Initialized_Global_App}`);
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`home/${Initialize_Home_Page}`);
     }
 
-
-    created() {
-      this.initialize();
-    }
 
     async handlePageChange(toPageNum: number) {
       await this.inputPageNum({pageNum: toPageNum});

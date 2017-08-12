@@ -27,15 +27,8 @@
     tagsList: TagItem[];
 
 
-    @ModuleAction(Initialize_Tags_Page)
-    initialize: () => Promise<any>;
-
-    asyncData({store, route}): Promise<void> {
-      return store.dispatch(`app/${Initialized_Global_App}`);
-    }
-
-    created() {
-      this.initialize();
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`tags/${Initialize_Tags_Page}`);
     }
   }
 </script>

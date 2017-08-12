@@ -80,17 +80,14 @@
     @ModuleAction(Initialize_Archives_Page)
     initialize: (payload: { pageNum: number }) => Promise<any>;
 
-    asyncData({store, route}): Promise<void> {
-      return store.dispatch(`app/${Initialized_Global_App}`);
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`archives/${Initialize_Archives_Page}`);
     }
 
     getDate(date: string) {
       return Moment(date).format(this.dateTimeFormat.date_format);
     }
 
-    created() {
-      this.initialize({pageNum: 1});
-    }
 
     async handlePageChange(toPageNum: number) {
       await this.inputPageNum({pageNum: toPageNum});

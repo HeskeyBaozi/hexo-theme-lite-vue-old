@@ -1,6 +1,7 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {CategoryItem, PostListItem} from "@/interfaces";
 import {fetchAllCategories, fetchPostsListByCategory} from '@/api';
+import {Initialized_Global_App} from "@/store/modules/app";
 
 class CategoriesState {
   categoriesList: CategoryItem[] = [];
@@ -39,8 +40,9 @@ export const Initialize_Related_Posts = 'Initialize_Related_Posts';
  * Actions
  */
 const actions: ActionTree<CategoriesState, any> = {
-  [Initialize_Categories_Page]: async ({commit, getters}) => {
+  [Initialize_Categories_Page]: async ({dispatch, commit, getters}) => {
     if (!getters[Page_Initialized]) {
+      await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
       const json = await fetchAllCategories();
       commit({
         type: Save_Categories_List,
