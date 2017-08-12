@@ -15,7 +15,7 @@
   import {Component, Vue} from 'vue-property-decorator';
   import {namespace, State, Action} from 'vuex-class';
   import {Article} from '@/interfaces';
-  import {Initialize_Article_Page} from "@/store/modules/one-article";
+  import {ArticleModule, Initialize_Article_Page} from "@/store/modules/one-article";
   import ArticleContent from '@/components/ArticleContent';
   import ArticleCard from '@/components/ArticleCard';
   import {DateTimeFormat} from "@/interfaces/appClass";

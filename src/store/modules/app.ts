@@ -122,7 +122,7 @@ const actions: ActionTree<AppState, any> = {
       const json = await new Promise((resolve) => {
         setTimeout(() => {
           resolve(fetchHexoConfig());
-        }, 10000);
+        }, 3000);
       });
       commit({
         type: Save_Global_Hexo_Var,

@@ -66,6 +66,7 @@ router.onReady(async () => {
     }
   });
 
+
   // actually mount to DOM
   app.$mount('#app');
 
@@ -79,6 +80,7 @@ router.onReady(async () => {
   } catch (error) {
     LoadingBar.error();
   }
+
 });
 
 
