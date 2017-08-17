@@ -1,6 +1,8 @@
 declare const require: (url: string) => any;
 
-const apiPrefix: string = '.';
+import axios from 'axios';
+
+const prefix: string = '/assets/api';
 
 /**
  * Config
@@ -8,7 +10,7 @@ const apiPrefix: string = '.';
 
 // GET /api/site.json
 export const fetchHexoConfig = async () => {
-  return Promise.resolve(require(`${apiPrefix}/site.json`));
+  return axios.get(prefix + '/site.json');
 };
 
 
@@ -18,22 +20,22 @@ export const fetchHexoConfig = async () => {
 
 // GET /api/posts.json
 export const fetchPostsList = async () => {
-  return Promise.resolve(require(`${apiPrefix}/posts.json`));
+  return axios.get(prefix + '/posts.json');
 };
 
 // GET /api/posts/:pageNum.json
 export const fetchPostsListByPageNumber = async (currentPage: number) => {
-  return Promise.resolve(require(`${apiPrefix}/posts/${currentPage}.json`));
+  return axios.get(prefix + `/posts/${currentPage}.json`);
 };
 
 // GET /api/tags/:TagName.json
 export const fetchPostsListByTag = async (tagName: string) => {
-  return Promise.resolve(require(`${apiPrefix}/tags/${tagName}.json`));
+  return axios.get(prefix + `/tags/${tagName}.json`);
 };
 
 // GET /api/categories/:CategoriesName.json
 export const fetchPostsListByCategory = async (categoryName: string) => {
-  return Promise.resolve(require(`${apiPrefix}/categories/${categoryName}.json`));
+  return axios.get(prefix + `/categories/${categoryName}.json`);
 };
 
 /**
@@ -42,7 +44,7 @@ export const fetchPostsListByCategory = async (categoryName: string) => {
 
 // GET /api/articles/:Slug.json
 export const fetchPostBySlug = async (slug: string) => {
-  return Promise.resolve(require(`${apiPrefix}/articles/${slug}.json`));
+  return axios.get(prefix + `/articles/${slug}.json`);
 };
 
 
@@ -52,7 +54,7 @@ export const fetchPostBySlug = async (slug: string) => {
 
 // GET /api/tags.json
 export const fetchAllTags = async () => {
-  return Promise.resolve(require(`${apiPrefix}/tags.json`));
+  return axios.get(prefix + '/tags.json');
 };
 
 /**
@@ -61,7 +63,7 @@ export const fetchAllTags = async () => {
 
 // GET /api/categories.json
 export const fetchAllCategories = async () => {
-  return Promise.resolve(require(`${apiPrefix}/categories.json`));
+  return axios.get(prefix + '/categories.json');
 };
 
 
@@ -71,5 +73,5 @@ export const fetchAllCategories = async () => {
 
 // GET /api/pages/about.json
 export const fetchImplicitPageByName = async (pageName: string) => {
-  return Promise.resolve(require(`${apiPrefix}/pages/${pageName}.json`));
+  return axios.get(prefix + `/pages/${pageName}.json`);
 };

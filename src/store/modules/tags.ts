@@ -43,10 +43,11 @@ const actions: ActionTree<TagsState, any> = {
   [Initialize_Tags_Page]: async ({dispatch, commit, getters}) => {
     if (!getters[Page_Initialized]) {
       await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
-      const json = await fetchAllTags();
+      const res = await fetchAllTags();
+      const {data} = res;
       commit({
         type: Save_Tags_List,
-        list: json
+        list: data
       });
       commit({
         type: Make_Sure_Initialized
@@ -54,8 +55,9 @@ const actions: ActionTree<TagsState, any> = {
     }
   },
   [Initialize_Related_Posts]: async ({commit}, payload: { tag_name: string }) => {
-    const json = await fetchPostsListByTag(payload.tag_name);
-    const {name, postlist} = json;
+    const res = await fetchPostsListByTag(payload.tag_name);
+    const {data} = res;
+    const {name, postlist} = data;
     commit({
       type: Save_Related_Posts,
       list: postlist

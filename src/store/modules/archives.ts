@@ -3,6 +3,7 @@ import {ListPagination, PostListItem} from "@/interfaces";
 import {fetchPostsListByPageNumber, fetchPostsList} from '@/api';
 import {Global_Pagination, Initialized_Global_App} from "@/store/modules/app";
 import moment from 'moment';
+import {AxiosResponse} from "axios";
 
 class ArchivesState {
   postsList: PostListItem[] = [];
@@ -52,14 +53,14 @@ export const Input_PageNum = 'Input_PageNum';
 const actions: ActionTree<ArchivesState, any> = {
   [Initialize_Archives_Page]: async ({dispatch, commit, rootGetters}) => {
     await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
-    const json = await fetchPostsList();
-    const {data} = json;
+    const res: AxiosResponse = await fetchPostsList();
+    const {data} = res;
     commit({
       type: Save_Posts_List,
-      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+      list: data['data'].map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
     if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
-      const {total, pageSize, pageCount} = json;
+      const {total, pageSize, pageCount} = data;
       commit({
         type: Save_Posts_Pagination,
         pagination: {total, pageSize, pageCount}
@@ -71,11 +72,11 @@ const actions: ActionTree<ArchivesState, any> = {
   },
 
   [Input_PageNum]: async ({commit}, payload: { pageNum: number }) => {
-    const json = await fetchPostsListByPageNumber(payload.pageNum);
-    const {data} = json;
+    const res: AxiosResponse = await fetchPostsListByPageNumber(payload.pageNum);
+    const {data} = res;
     commit({
       type: Save_Posts_List,
-      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+      list: data['data'].map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
   }
 };

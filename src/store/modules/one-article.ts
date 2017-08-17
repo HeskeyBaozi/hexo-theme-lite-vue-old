@@ -62,10 +62,11 @@ const actions: ActionTree<ArticleState, any> = {
       commit({
         type: Begin_Initialize
       });
-      const json = await fetchPostBySlug(payload.slug);
+      const res = await fetchPostBySlug(payload.slug);
+      const {data} = res;
       commit({
         type: Save_Article,
-        article: json
+        article: data
       });
       commit({
         type: Make_Sure_Initialized
