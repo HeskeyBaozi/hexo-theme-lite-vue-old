@@ -10,8 +10,6 @@ import {
   Extensions,
   Pagination
 } from "@/interfaces/appClass";
-import {ReplaySubject} from "rxjs/ReplaySubject";
-import {LoadingBar} from 'iview';
 
 
 class AppState {
@@ -23,7 +21,7 @@ class AppState {
   dateTimeFormat: DateTimeFormat = new DateTimeFormat();
   page: Pagination = new Pagination();
   extensions: Extensions = new Extensions();
-  globalInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
+  globalInitialized: boolean = false;
 }
 
 /**
@@ -107,8 +105,7 @@ const mutations: MutationTree<AppState> = {
     };
   },
   [Make_Sure_Initialized]: state => {
-    state.globalInitialized.next(true);
-    state.globalInitialized.complete();
+    state.globalInitialized = true;
   }
 };
 
@@ -120,36 +117,35 @@ export const Initialized_Global_App = 'Initialized_Global_App';
  * Actions
  */
 const actions: ActionTree<AppState, any> = {
-  [Initialized_Global_App]: async ({commit, getters}) => {
-    LoadingBar.start();
-    const json = await new Promise((resolve) => {
-      setTimeout(() => {
-        LoadingBar.update(75);
-        resolve(fetchHexoConfig());
-      }, 2000);
-    });
-    commit({
-      type: Save_Global_Hexo_Var,
-      json
-    });
-    commit({
-      type: Make_Sure_Initialized
-    });
-    LoadingBar.finish();
+  [Initialized_Global_App]: async ({commit, getters}): Promise<void> => {
+    if (!getters[Global_Initialized]) {
+      const json = await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(fetchHexoConfig());
+        }, 3000);
+      });
+      commit({
+        type: Save_Global_Hexo_Var,
+        json
+      });
+      commit({
+        type: Make_Sure_Initialized
+      });
+    }
   }
 };
 
 /**
  * Getters Types
  */
-export const Global_Initialized$ = 'Global_Initialized$';
+export const Global_Initialized = 'Global_Initialized';
 export const Global_Pagination = 'Global_Pagination';
 
 /**
  * Getters
  */
 const getters: GetterTree<AppState, any> = {
-  [Global_Initialized$]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
+  [Global_Initialized]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
     return state.globalInitialized;
   },
   [Global_Pagination]: (state: AppState) => {

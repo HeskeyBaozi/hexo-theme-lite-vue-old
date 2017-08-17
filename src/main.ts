@@ -1,19 +1,23 @@
 import Vue from 'vue';
 import App from './App.vue';
-import store from './store';
-import router from './router';
+import {createRouter} from '@/router';
+import {createStore} from "@/store";
+import Component from 'vue-class-component';
 
-/**
- * use iView UI
- */
-import './my-theme/index.less';
+Component.registerHooks([
+  'asyncData'
+]);
 
-Vue.config.productionTip = false;
+export function createApp() {
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-});
+  Vue.config.productionTip = false;
+
+  const router = createRouter();
+  const store = createStore();
+  const app = new Vue({
+    router,
+    store,
+    render: h => h(App)
+  });
+  return {app, router, store};
+}

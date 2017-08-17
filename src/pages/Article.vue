@@ -15,13 +15,13 @@
   import {Component, Vue} from 'vue-property-decorator';
   import {namespace, State, Action} from 'vuex-class';
   import {Article} from '@/interfaces';
-  import {Initialize_Article_Page} from "@/store/modules/one-article";
+  import {ArticleModule, Initialize_Article_Page} from "@/store/modules/one-article";
   import ArticleContent from '@/components/ArticleContent';
   import ArticleCard from '@/components/ArticleCard';
   import {DateTimeFormat} from "@/interfaces/appClass";
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleState = namespace('article', State);
-  const ModuleAction = namespace('article', Action);
   const AppState = namespace('app', State);
 
   @Component({
@@ -35,19 +35,10 @@
     @AppState
     dateTimeFormat: DateTimeFormat;
 
-    @ModuleAction(Initialize_Article_Page)
-    initialize: (payload: { slug: string }) => Promise<any>;
-
-    created() {
-      /**
-       * Subscribe the url
-       */
-      this.$watch('$route.params.slug', (newSlug: string, oldSlug: string) => {
-        this.initialize({slug: newSlug});
-      }, {
-        immediate: true
-      });
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug});
     }
+
   }
 </script>
 

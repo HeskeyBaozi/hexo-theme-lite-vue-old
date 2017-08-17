@@ -1,21 +1,29 @@
 <template>
   <div id="app">
     <top-nav></top-nav>
+
     <header id="huge-background">
       <div class="container">
         <top-header :site="site"></top-header>
       </div>
     </header>
-    <main id="scroll-background">
+
+    <section id="scroll-background">
       <div class="container card-container">
         <router-view></router-view>
+        <div v-show="!globalInitialized" class="loading">
+          <i-spin size="large"></i-spin>
+          <span>Loading</span>
+        </div>
       </div>
-    </main>
+    </section>
+
     <footer id="footer-background">
       <div class="container">
         <bottom-footer :site="site"></bottom-footer>
       </div>
     </footer>
+
   </div>
 </template>
 
@@ -28,6 +36,7 @@
   import {Initialized_Global_App} from "@/store/modules/app";
   import {NavigationGuard, Route} from "vue-router";
   import {Site} from "@/interfaces/appClass";
+  import ISpin from 'iview-comp/spin/spin.vue';
 
 
   const ModuleState = namespace('app', State);
@@ -36,19 +45,15 @@
   @Component({
     name: 'app',
     components: {
-      TopNav, TopHeader, BottomFooter
+      TopNav, TopHeader, BottomFooter, ISpin
     }
   })
   export default class App extends Vue {
     @ModuleState
     site: Site;
 
-    @ModuleAction(Initialized_Global_App)
-    initialize: () => Promise<any>;
-
-    created() {
-      this.initialize();
-    }
+    @ModuleState
+    globalInitialized: boolean;
   }
 </script>
 
@@ -89,12 +94,31 @@
     }
 
     .card-container {
+      position: relative;
+      min-height: 30vh;
       background-color: white;
       padding: 1em 2em;
       box-shadow: 0 0 5px gray;
       transition: box-shadow 300ms;
       &:hover {
         box-shadow: 0 0 8px gray;
+      }
+    }
+
+    .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 2em;
+      > * {
+        margin-bottom: 1em;
       }
     }
   }

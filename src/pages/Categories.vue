@@ -13,6 +13,7 @@
   import {Initialize_Categories_Page} from "@/store/modules/categories";
   import {CategoryItem} from '@/interfaces';
   import BoxList from '@/components/BoxList';
+  import {Initialized_Global_App} from "@/store/modules/app";
 
   const ModuleAction = namespace('categories', Action);
   const ModuleState = namespace('categories', State);
@@ -23,16 +24,13 @@
   })
   export default class Categories extends Vue {
 
-    @ModuleAction(Initialize_Categories_Page)
-    initialize: () => Promise<any>;
-
     @ModuleState
     categoriesList: CategoryItem[];
 
-    created() {
-      console.log('categories created');
-      this.initialize();
+    async asyncData({store, route}): Promise<void> {
+      return store.dispatch(`categories/${Initialize_Categories_Page}`);
     }
+
   }
 </script>
 

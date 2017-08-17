@@ -2,6 +2,7 @@ import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {Article} from "@/interfaces";
 import {fetchPostBySlug} from '@/api';
 import moment from 'moment';
+import {Initialized_Global_App} from "@/store/modules/app";
 
 class ArticleState {
   article: Article = {
@@ -55,8 +56,9 @@ export const Initialize_Article_Page = 'Initialize_Article_Page';
  * Actions
  */
 const actions: ActionTree<ArticleState, any> = {
-  [Initialize_Article_Page]: async ({commit, getters}, payload: { slug: string }) => {
+  [Initialize_Article_Page]: async ({dispatch, commit, getters}, payload: { slug: string }) => {
     if (!getters[Page_Initialized] || getters[Current_Article_Slug] !== payload.slug) {
+      await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
       commit({
         type: Begin_Initialize
       });

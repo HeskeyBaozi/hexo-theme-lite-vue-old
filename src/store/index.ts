@@ -10,14 +10,16 @@ import {HomeModule} from "@/store/modules/home";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  modules: {
-    hello: new HelloModule(),
-    archives: new ArchivesModule(),
-    app: new AppModule(),
-    tags: new TagsModule(),
-    categories: new CategoriesModule(),
-    article: new ArticleModule(),
-    home: new HomeModule()
-  }
-});
+export function createStore() {
+  return new Vuex.Store({
+    modules: {
+      hello: new HelloModule(),
+      archives: new ArchivesModule(),
+      app: new AppModule(),
+      tags: new TagsModule(),
+      categories: new CategoriesModule(),
+      article: new ArticleModule(),
+      home: new HomeModule()
+    }
+  });
+}

@@ -1,7 +1,7 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {ListPagination, PostListItem} from "@/interfaces";
 import {fetchPostsListByPageNumber, fetchPostsList} from '@/api';
-import {Global_Pagination} from "@/store/modules/app";
+import {Global_Pagination, Initialized_Global_App} from "@/store/modules/app";
 import moment from 'moment';
 
 class ArchivesState {
@@ -50,7 +50,8 @@ export const Input_PageNum = 'Input_PageNum';
  * Actions
  */
 const actions: ActionTree<ArchivesState, any> = {
-  [Initialize_Archives_Page]: async ({commit, getters, rootGetters}) => {
+  [Initialize_Archives_Page]: async ({dispatch, commit, rootGetters}) => {
+    await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
     const json = await fetchPostsList();
     const {data} = json;
     commit({
