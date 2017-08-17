@@ -29,6 +29,9 @@ declare const window: any;
 // the state is determined during SSR and inlined in the page markup.
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__);
+  console.log('use state from the server');
+} else {
+  console.log('client reRender!');
 }
 
 
@@ -46,7 +49,7 @@ router.onReady(async () => {
     const activated = matched.filter((c, i) => {
       return diffed || (diffed = (prevMatched[i] !== c))
     });
-    const asyncDataHooks = activated.map((c: any) => c.asyncData || c.options.asyncData).filter(_ => _);
+    const asyncDataHooks = activated.map((c: any) => c.asyncData || c.options && c.options.asyncData).filter(_ => _);
     if (!asyncDataHooks.length) {
       return next();
     }
