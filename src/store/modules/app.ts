@@ -10,6 +10,7 @@ import {
   Extensions,
   Pagination
 } from "@/interfaces/appClass";
+import {AxiosResponse} from "axios";
 
 
 class AppState {
@@ -119,14 +120,15 @@ export const Initialized_Global_App = 'Initialized_Global_App';
 const actions: ActionTree<AppState, any> = {
   [Initialized_Global_App]: async ({commit, getters}): Promise<void> => {
     if (!getters[Global_Initialized]) {
-      const json = await new Promise((resolve) => {
+      const res: AxiosResponse = await new Promise<AxiosResponse>((resolve) => {
         setTimeout(() => {
           resolve(fetchHexoConfig());
         }, 3000);
       });
+      const {data} = res;
       commit({
         type: Save_Global_Hexo_Var,
-        json
+        json: data
       });
       commit({
         type: Make_Sure_Initialized

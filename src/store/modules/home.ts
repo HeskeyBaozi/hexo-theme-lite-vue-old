@@ -53,14 +53,14 @@ export const Input_PageNum = 'Input_PageNum';
 const actions: ActionTree<HomeState, any> = {
   [Initialize_Home_Page]: async ({dispatch, commit, rootGetters}) => {
     await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
-    const json = await fetchPostsList();
-    const {data} = json;
+    const res = await fetchPostsList();
+    const {data} = res;
     commit({
       type: Save_Posts_List,
-      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+      list: data['data'].map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
     if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
-      const {total, pageSize, pageCount} = json;
+      const {total, pageSize, pageCount} = data;
       commit({
         type: Save_Posts_Pagination,
         pagination: {total, pageSize, pageCount}
@@ -73,12 +73,13 @@ const actions: ActionTree<HomeState, any> = {
 
   [Input_PageNum]: async ({commit}, payload: { pageNum: number }) => {
     console.log('number', payload.pageNum);
-    const json = await fetchPostsListByPageNumber(payload.pageNum);
-    const {data, total, pageSize, pageCount} = json;
+    const res = await fetchPostsListByPageNumber(payload.pageNum);
+    const {data} = res;
     commit({
       type: Save_Posts_List,
-      list: data.map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+      list: data['data'].map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
     });
+    const {total, pageSize, pageCount} = data;
     commit({
       type: Save_Posts_Pagination,
       pagination: {total, pageSize, pageCount}

@@ -43,10 +43,11 @@ const actions: ActionTree<CategoriesState, any> = {
   [Initialize_Categories_Page]: async ({dispatch, commit, getters}) => {
     if (!getters[Page_Initialized]) {
       await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
-      const json = await fetchAllCategories();
+      const res = await fetchAllCategories();
+      const {data} = res;
       commit({
         type: Save_Categories_List,
-        list: json
+        list: data
       });
       commit({
         type: Make_Sure_Initialized
@@ -54,8 +55,9 @@ const actions: ActionTree<CategoriesState, any> = {
     }
   },
   [Initialize_Related_Posts]: async ({commit}, payload: { category_name: string }) => {
-    const json = await fetchPostsListByCategory(payload.category_name);
-    const {name, postlist} = json;
+    const res = await fetchPostsListByCategory(payload.category_name);
+    const {data} = res;
+    const {name, postlist} = data;
     commit({
       type: Save_Related_Posts,
       list: postlist
