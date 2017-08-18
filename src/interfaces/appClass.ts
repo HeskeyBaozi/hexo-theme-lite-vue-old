@@ -72,3 +72,20 @@ export class Extensions {
   theme: string | boolean = false; // 当前主题名称。值为false时禁用主题
   deploy = {}; // 部署部分的设置
 }
+
+export class Theme {
+  menu = {};
+  menu_icons = {
+    enable: false
+  };
+  social = {};
+  social_icons = {
+    enable: false
+  };
+
+  avatar = {
+    enable: false,
+    url: ''
+  };
+}
+

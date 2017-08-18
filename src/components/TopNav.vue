@@ -1,14 +1,28 @@
 <template>
   <div id="lite-top-nav" class="blur top-left-padding">
     <main class="container">
+      <i-menu mode="horizontal"
+              theme="light" :active-name="$route.path"
+              @on-select="go"
+      >
+        <i-menu-item class="top-dropdown" :name="item.path" v-for="item in items" :key="item.name">
+          <div class="item-wrapper">
+            <div class="icon-wrapper" v-if="theme.menu_icons.enable">
+              <i-icon :type="item.icon" class="icon"></i-icon>
+            </div>
+            <span>{{item.name}}</span>
+          </div>
+        </i-menu-item>
+      </i-menu>
+      <!--
       <i-dropdown placement="bottom-start" trigger="click" @on-click="go($event)" transfer>
         <i-button icon="chevron-down" type="text" size="small">
           <span class="menu-title">Menu</span>
         </i-button>
-        <i-dropdown-menu slot="list">
-          <i-dropdown-item class="top-dropdown" :name="item.name" v-for="item in items" :key="item.name">
+        <i-dropdown-menu mode="horizontal" theme="light" slot="list">
+          <i-dropdown-item class="top-dropdown" :name="item.path" v-for="item in items" :key="item.name">
             <div class="item-wrapper">
-              <div class="icon-wrapper">
+              <div class="icon-wrapper" v-if="theme.menu_icons.enable">
                 <i-icon :type="item.icon" class="icon"></i-icon>
               </div>
               <span>{{item.name}}</span>
@@ -16,6 +30,7 @@
           </i-dropdown-item>
         </i-dropdown-menu>
       </i-dropdown>
+-->
     </main>
   </div>
 </template>
@@ -27,27 +42,41 @@
   import IIcon from 'iview-comp/icon';
   import IButton from 'iview-comp/button/button.vue';
   import {Component, Prop, Vue} from "vue-property-decorator";
+  import IMenu from 'iview-comp/menu/menu.vue';
+  import IMenuItem from 'iview-comp/menu/menu-item.vue';
+  import {Theme} from "@/interfaces/appClass";
 
 
   @Component({
     name: 'top-nav',
     components: {
-      IDropdown, IIcon, IDropdownMenu, IDropdownItem, IButton
+      IDropdown, IIcon, IDropdownMenu, IDropdownItem, IButton,
+      IMenu, IMenuItem
     }
   })
   export default class TopNav extends Vue {
+    @Prop({
+      required: true,
+      type: Object
+    })
+    theme: Theme;
 
-    go(name: string) {
-      this.$router.push({name});
+    go(path: string) {
+      this.$router.push({path});
     }
 
     get items() {
-      return [
-        {name: 'Home', icon: 'ios-home'},
-        {name: 'Archives', icon: 'android-list'},
-        {name: 'Categories', icon: 'android-bookmark'},
-        {name: 'Tags', icon: 'pound'}
-      ];
+      const result: { name: string, path: string, icon: string }[] = [];
+      const routes = this.theme.menu;
+      const icons = this.theme.menu_icons;
+      for (let key in routes) {
+        result.push({
+          name: key,
+          path: routes[key],
+          icon: icons[key]
+        });
+      }
+      return result;
     }
   }
 </script>
@@ -68,7 +97,24 @@
         margin-right: .3em;
       }
     }
+  }
 
+  .ivu-menu-light {
+    background-color: rgba(255, 255, 255, 0) !important;
+
+    &:after {
+      background-color: rgba(255, 255, 255, 0) !important;
+    }
+  }
+
+  .ivu-menu-horizontal {
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .ivu-menu {
+    display: flex;
+    justify-content: center;
   }
 </style>
 <style lang="less" scoped>
@@ -83,6 +129,7 @@
     right: 0;
     height: 40px;
     background-color: white;
+    text-shadow: 0 0 3px white;
 
     &:before {
       filter: blur(6px);

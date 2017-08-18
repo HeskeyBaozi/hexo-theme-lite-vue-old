@@ -8,7 +8,8 @@ import {
   DateTimeFormat,
   CategoryAndTags,
   Extensions,
-  Pagination
+  Pagination,
+  Theme
 } from "@/interfaces/appClass";
 import {AxiosResponse} from "axios";
 
@@ -22,6 +23,7 @@ class AppState {
   dateTimeFormat: DateTimeFormat = new DateTimeFormat();
   page: Pagination = new Pagination();
   extensions: Extensions = new Extensions();
+  theme: Theme = new Theme();
   globalInitialized: boolean = false;
 }
 
@@ -104,6 +106,16 @@ const mutations: MutationTree<AppState> = {
       theme: json.theme,
       deploy: json.deploy
     };
+
+    state.theme = {
+      ...state.theme,
+      menu: json.menu,
+      menu_icons: json.menu_icons,
+      social: json.social,
+      social_icons: json.social_icons,
+      avatar: json.avatar
+    };
+
   },
   [Make_Sure_Initialized]: state => {
     state.globalInitialized = true;

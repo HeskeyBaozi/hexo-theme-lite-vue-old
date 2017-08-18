@@ -1,0 +1,37 @@
+# -------------------------------------------------------
+# Custom Pictures
+# -------------------------------------------------------
+
+avatar:
+  enable: true
+  url: /assets/6828af33.jpg
+
+# -------------------------------------------------------
+# Menu
+# -------------------------------------------------------
+
+menu:
+  home: /
+  archives: /archives
+  categories: /categories
+  tags: /tags
+
+menu_icons:
+  enable: true
+  home: ios-home
+  archives: android-list
+  categories: android-bookmark
+  tags: pound
+
+# -------------------------------------------------------
+# Social
+# -------------------------------------------------------
+
+social:
+  github: https://github.com/heskeybaozi
+  weibo: http://weibo.com/52hezhiyu
+
+social_icons:
+  enable: true
+  github: social-github
+  weibo: ionic

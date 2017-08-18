@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <top-nav></top-nav>
+    <top-nav :theme="theme"></top-nav>
 
     <header id="huge-background">
       <div class="container">
-        <top-header :site="site"></top-header>
+        <top-header :site="site" :theme="theme"></top-header>
       </div>
     </header>
 
@@ -20,7 +20,7 @@
 
     <footer id="footer-background">
       <div class="container">
-        <bottom-footer :site="site"></bottom-footer>
+        <bottom-footer :site="site" :theme="theme"></bottom-footer>
       </div>
     </footer>
 
@@ -35,12 +35,10 @@
   import BottomFooter from '@/components/BottomFooter';
   import {Initialized_Global_App} from "@/store/modules/app";
   import {NavigationGuard, Route} from "vue-router";
-  import {Site} from "@/interfaces/appClass";
+  import {Site, Theme} from "@/interfaces/appClass";
   import ISpin from 'iview-comp/spin/spin.vue';
 
-
   const ModuleState = namespace('app', State);
-  const ModuleAction = namespace('app', Action);
 
   @Component({
     name: 'app',
@@ -51,6 +49,9 @@
   export default class App extends Vue {
     @ModuleState
     site: Site;
+
+    @ModuleState
+    theme: Theme;
 
     @ModuleState
     globalInitialized: boolean;
