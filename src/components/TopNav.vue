@@ -1,36 +1,42 @@
 <template>
   <div id="lite-top-nav" class="blur top-left-padding">
     <main class="container">
-      <i-menu mode="horizontal"
-              theme="light" :active-name="$route.path"
-              @on-select="go"
-      >
-        <i-menu-item class="top-dropdown" :name="item.path" v-for="item in items" :key="item.name">
-          <div class="item-wrapper">
-            <div class="icon-wrapper" v-if="theme.menu_icons.enable">
-              <i-icon :type="item.icon" class="icon"></i-icon>
-            </div>
-            <span>{{item.name}}</span>
-          </div>
-        </i-menu-item>
-      </i-menu>
-      <!--
-      <i-dropdown placement="bottom-start" trigger="click" @on-click="go($event)" transfer>
-        <i-button icon="chevron-down" type="text" size="small">
-          <span class="menu-title">Menu</span>
-        </i-button>
-        <i-dropdown-menu mode="horizontal" theme="light" slot="list">
-          <i-dropdown-item class="top-dropdown" :name="item.path" v-for="item in items" :key="item.name">
-            <div class="item-wrapper">
-              <div class="icon-wrapper" v-if="theme.menu_icons.enable">
-                <i-icon :type="item.icon" class="icon"></i-icon>
+      <i-row>
+        <i-col :xs="0" :sm="24">
+          <!-- Reactive Menu >= 768px width -->
+          <i-menu mode="horizontal"
+                  theme="light" :active-name="$route.path"
+                  @on-select="go"
+          >
+            <i-menu-item class="top-dropdown" :name="item.path" v-for="item in items" :key="item.name">
+              <div class="item-wrapper">
+                <div class="icon-wrapper" v-if="theme.menu_icons.enable">
+                  <i-icon :type="item.icon" class="icon"></i-icon>
+                </div>
+                <span>{{item.name}}</span>
               </div>
-              <span>{{item.name}}</span>
-            </div>
-          </i-dropdown-item>
-        </i-dropdown-menu>
-      </i-dropdown>
--->
+            </i-menu-item>
+          </i-menu>
+        </i-col>
+        <i-col :xs="24" :sm="0">
+          <!-- <= 768px -->
+          <i-dropdown placement="bottom-start" trigger="click" @on-click="go($event)" transfer>
+            <i-button icon="chevron-down" type="text" size="small">
+              <span class="menu-title">Menu</span>
+            </i-button>
+            <i-dropdown-menu mode="horizontal" theme="light" slot="list">
+              <i-dropdown-item class="top-dropdown" :name="item.path" v-for="item in items" :key="item.name">
+                <div class="item-wrapper">
+                  <div class="icon-wrapper" v-if="theme.menu_icons.enable">
+                    <i-icon :type="item.icon" class="icon"></i-icon>
+                  </div>
+                  <span>{{item.name}}</span>
+                </div>
+              </i-dropdown-item>
+            </i-dropdown-menu>
+          </i-dropdown>
+        </i-col>
+      </i-row>
     </main>
   </div>
 </template>
@@ -41,6 +47,8 @@
   import IDropdownItem from 'iview-comp/dropdown/dropdown-item.vue';
   import IIcon from 'iview-comp/icon';
   import IButton from 'iview-comp/button/button.vue';
+  import IRow from 'iview-comp/grid/row.vue';
+  import ICol from 'iview-comp/grid/col.vue';
   import {Component, Prop, Vue} from "vue-property-decorator";
   import IMenu from 'iview-comp/menu/menu.vue';
   import IMenuItem from 'iview-comp/menu/menu-item.vue';
@@ -51,7 +59,7 @@
     name: 'top-nav',
     components: {
       IDropdown, IIcon, IDropdownMenu, IDropdownItem, IButton,
-      IMenu, IMenuItem
+      IMenu, IMenuItem, IRow, ICol
     }
   })
   export default class TopNav extends Vue {
