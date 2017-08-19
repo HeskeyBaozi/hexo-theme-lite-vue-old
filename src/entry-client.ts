@@ -69,11 +69,13 @@ router.onReady(async () => {
     }
   });
 
-
   // actually mount to DOM
   app.$mount('#app');
 
+
   // fetch initial state
+  // If you use ServerSide Render,
+  // You Don't Need to fetch the initial State in the client side:)
   const initMatched = router.getMatchedComponents(router.currentRoute);
   const asyncDataHooks = initMatched.map((c: any) => c.asyncData || c.options.asyncData).filter(_ => _);
   try {

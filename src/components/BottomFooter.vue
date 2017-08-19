@@ -2,11 +2,9 @@
   <footer id="lite-footer" class="blur">
     <section class="footer-description">
       <div class="contact-list">
-        <a href="https://github.com/heskeybaozi" target="_blank">
-          <i-icon type="social-github"></i-icon>
-        </a>
-        <a href="http://weibo.com/52hezhiyu/" target="_blank">
-          <i-icon type="ionic"></i-icon>
+        <a v-for="item in items" :key="item.name" :href="item.url" target="_blank">
+          <i-icon v-if="theme.social_icons.enable" :type="item.icon"></i-icon>
+          <span v-else>{{item.name}}</span>
         </a>
       </div>
       <p class="hexo-theme">Hexo Theme: Lite</p>
@@ -19,7 +17,7 @@
 <script lang="ts">
   import {Component, Prop, Vue} from 'vue-property-decorator';
   import IIcon from 'iview-comp/icon/icon.vue';
-  import {Site} from "@/interfaces/appClass";
+  import {Site, Theme} from "@/interfaces/appClass";
 
   @Component({
     name: 'bottom-footer',
@@ -31,6 +29,26 @@
       type: Object
     })
     site: Site;
+
+    @Prop({
+      required: true,
+      type: Object
+    })
+    theme: Theme;
+
+    get items() {
+      const result: { name: string, url: string, icon: string }[] = [];
+      const routes = this.theme.social;
+      const icons = this.theme.social_icons;
+      for (let key in routes) {
+        result.push({
+          name: key,
+          url: routes[key],
+          icon: icons[key]
+        });
+      }
+      return result;
+    }
   }
 </script>
 <style lang="less" src="@/my-theme/mixins.less"></style>

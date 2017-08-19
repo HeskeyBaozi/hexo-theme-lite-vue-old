@@ -2,7 +2,7 @@ declare const require: (url: string) => any;
 
 import axios from 'axios';
 
-const prefix: string = '/assets/api';
+const prefix: string = '/api';
 
 /**
  * Config

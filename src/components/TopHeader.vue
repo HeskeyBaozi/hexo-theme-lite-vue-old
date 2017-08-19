@@ -1,7 +1,7 @@
 <template>
   <div id="lite-avatar-info" class="blur">
     <div class="avatar-info basic-container">
-      <img class="avatar shadow" src="../assets/6828af33.jpg" alt="avatar">
+      <img class="avatar shadow" v-if="theme.avatar.enable" :src="theme.avatar.url" alt="avatar">
       <div class="head-description">
         <p class="author-name">{{site.author}}</p>
         <p class="description">{{site.description}}</p>
@@ -12,7 +12,7 @@
 
 <script lang="ts">
   import {Component, Prop, Vue} from 'vue-property-decorator';
-  import {Site} from "@/interfaces/appClass";
+  import {Site, Theme} from "@/interfaces/appClass";
 
   @Component({
     name: 'top-header'
@@ -23,6 +23,12 @@
       type: Object
     })
     site: Site;
+
+    @Prop({
+      required: true,
+      type: Object
+    })
+    theme: Theme;
   }
 </script>
 
