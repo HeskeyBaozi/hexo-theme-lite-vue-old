@@ -308,6 +308,6 @@
       max-width: 100%;
       margin: .5em auto;
     }
-    
+
   }
 </style>

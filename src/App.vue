@@ -80,7 +80,7 @@
 <style lang="less" scoped>
   #app {
     #huge-background {
-      height: 50vh;
+      padding-top: 100px;
       display: flex;
       flex-flow: column nowrap;
       justify-content: flex-end;

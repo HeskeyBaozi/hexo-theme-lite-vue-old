@@ -51,24 +51,26 @@ export const Input_PageNum = 'Input_PageNum';
  * Actions
  */
 const actions: ActionTree<ArchivesState, any> = {
-  [Initialize_Archives_Page]: async ({dispatch, commit, rootGetters}) => {
-    await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
-    const res: AxiosResponse = await fetchPostsList();
-    const {data} = res;
-    commit({
-      type: Save_Posts_List,
-      list: data['data'].map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
-    });
-    if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
-      const {total, pageSize, pageCount} = data;
+  [Initialize_Archives_Page]: async ({dispatch, commit, rootGetters, getters}) => {
+    if (!getters[Page_Initialized]) {
+      await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
+      const res: AxiosResponse = await fetchPostsList();
+      const {data} = res;
       commit({
-        type: Save_Posts_Pagination,
-        pagination: {total, pageSize, pageCount}
+        type: Save_Posts_List,
+        list: data['data'].map(item => ({...item, date: moment(item.date), updated: moment(item.updated)}))
+      });
+      if (rootGetters[`app/${Global_Pagination}`].per_page !== 0) {
+        const {total, pageSize, pageCount} = data;
+        commit({
+          type: Save_Posts_Pagination,
+          pagination: {total, pageSize, pageCount}
+        });
+      }
+      commit({
+        type: Make_Sure_Initialized
       });
     }
-    commit({
-      type: Make_Sure_Initialized
-    });
   },
 
   [Input_PageNum]: async ({commit}, payload: { pageNum: number }) => {

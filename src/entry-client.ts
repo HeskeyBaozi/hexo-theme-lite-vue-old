@@ -13,6 +13,7 @@ Vue.mixin({
           store: this.$store,
           route: to
         });
+        window.scrollTo(0, 0);
         LoadingBar.finish();
         next();
       } catch (error) {

@@ -29,6 +29,7 @@
     <i-page v-if="page.per_page !== 0"
             class="page"
             size="small"
+            :current="currentPage"
             @on-change="handlePageChange($event)"
             :total="pagination.total"></i-page>
   </div>
@@ -81,7 +82,10 @@
     initialize: (payload: { pageNum: number }) => Promise<any>;
 
     async asyncData({store, route}): Promise<void> {
-      return store.dispatch(`archives/${Initialize_Archives_Page}`);
+      await store.dispatch(`archives/${Initialize_Archives_Page}`);
+      if (route.query['page']) {
+        await store.dispatch(`archives/${Input_PageNum}`, {pageNum: route.query['page']});
+      }
     }
 
     getDate(date: string) {
@@ -89,11 +93,13 @@
     }
 
 
-    async handlePageChange(toPageNum: number) {
-      await this.inputPageNum({pageNum: toPageNum});
-      window.scrollTo(0, 0);
+    async handlePageChange(toPageNum: string) {
+      this.$router.push({name: 'Archives', query: {page: toPageNum}});
     }
 
+    get currentPage(): number {
+      return this.$route.query['page'] && Number.parseInt(this.$route.query['page']) || 1;
+    }
   }
 </script>
 
