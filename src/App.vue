@@ -55,6 +55,12 @@
 
     @ModuleState
     globalInitialized: boolean;
+
+    mounted() {
+      this.$watch('site.title', val => {
+        document.title = val;
+      });
+    }
   }
 </script>
 

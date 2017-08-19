@@ -8,12 +8,15 @@ Vue.mixin({
     const {asyncData} = this.$options;
     if (asyncData) {
       try {
+        LoadingBar.start();
         await asyncData({
           store: this.$store,
           route: to
         });
+        LoadingBar.finish();
         next();
       } catch (error) {
+        LoadingBar.error();
         next(error);
       }
     } else {
@@ -30,10 +33,7 @@ declare const window: any;
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__);
   console.log('use state from the server');
-} else {
-  console.log('client reRender!');
 }
-
 
 router.onReady(async () => {
 
