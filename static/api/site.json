@@ -83,7 +83,7 @@
     "url": "/static/images/6828af33.jpg"
   },
   "menu": {
-    "home": "/",
+    "home": "/home",
     "archives": "/archives"
   },
   "menu_icons": {

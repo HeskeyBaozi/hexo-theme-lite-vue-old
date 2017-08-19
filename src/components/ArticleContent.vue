@@ -192,6 +192,7 @@
   #lite-article-content {
     p {
       margin: 1em 0;
+      line-height: 180%;
     }
 
     a {
@@ -202,6 +203,7 @@
     h1 {
       font-size: 1.8em;
       border-bottom: 1px solid #ddd;
+      margin-top: .5em;
       margin-bottom: .5em;
     }
 
@@ -234,10 +236,28 @@
 
     ul {
       padding-left: 30px;
+      margin-bottom: 1em;
+      list-style: circle;
+      > * {
+        margin-bottom: .5em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
     }
 
     ol {
       padding-left: 30px;
+      margin-bottom: 1em;
+      list-style: decimal;
+      > * {
+        margin-bottom: .5em;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
     }
 
     ol li ul:first-of-type {
@@ -284,8 +304,10 @@
     }
 
     img {
+      display: block;
       max-width: 100%;
+      margin: .5em auto;
     }
-
+    
   }
 </style>
