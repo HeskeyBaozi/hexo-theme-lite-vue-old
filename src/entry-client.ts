@@ -1,6 +1,7 @@
 import {createApp} from './main';
 import Vue from 'vue';
 import {LoadingBar} from 'iview';
+import {Hide_Loading, Show_Loading} from "@/store/modules/app";
 
 // a global mixin that calls `asyncData` when a route component's params change
 Vue.mixin({
@@ -9,18 +10,21 @@ Vue.mixin({
     if (asyncData) {
       try {
         LoadingBar.start();
+        store.dispatch(`app/${Show_Loading}`);
         await asyncData({
           store: this.$store,
           route: to
         });
         window.scrollTo(0, 0);
+        store.dispatch(`app/${Hide_Loading}`);
         LoadingBar.finish();
         next();
       } catch (error) {
         LoadingBar.error();
-        next(error);
+        next(false);
       }
     } else {
+      console.log(this, 'there is no async data func');
       next();
     }
   }
@@ -57,16 +61,16 @@ router.onReady(async () => {
 
     try {
       LoadingBar.start();
+      store.dispatch(`app/${Show_Loading}`);
       await Promise.all(asyncDataHooks.map(hook => hook({store, route: to})));
+      store.dispatch(`app/${Hide_Loading}`);
       LoadingBar.finish();
-
-      if (to.matched.some(record => record.meta.scrollTop)) {
-        window.scrollTo(0, 0);
-      }
+      window.scrollTo(0, 0);
       next();
+
     } catch (error) {
       LoadingBar.error();
-      next(error);
+      next(false);
     }
   });
 

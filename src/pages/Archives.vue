@@ -15,7 +15,7 @@
               <i-icon type="link"></i-icon>
             </a>
             <router-link class="article-title"
-                         v-else :to="{name: 'OneArticle', params: {slug: post.slug}}">
+                         v-else :to="{name: 'OneArticle', params: {slug: post.slug, isPage:false}}">
               {{post.title || 'Untitled'}}
             </router-link>
           </div>

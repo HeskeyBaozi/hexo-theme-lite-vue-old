@@ -11,7 +11,7 @@
     <section id="scroll-background">
       <div class="container card-container">
         <router-view></router-view>
-        <div v-show="!globalInitialized" class="loading">
+        <div v-show="loading" class="loading">
           <i-spin size="large"></i-spin>
           <span>Loading</span>
         </div>
@@ -29,16 +29,17 @@
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
-  import {State, namespace, Action} from 'vuex-class';
+  import {State, namespace, Action, Getter} from 'vuex-class';
   import TopNav from '@/components/TopNav';
   import TopHeader from '@/components/TopHeader';
   import BottomFooter from '@/components/BottomFooter';
-  import {Initialized_Global_App} from "@/store/modules/app";
+  import {Global_Loading, Initialized_Global_App} from "@/store/modules/app";
   import {NavigationGuard, Route} from "vue-router";
   import {Site, Theme} from "@/interfaces/appClass";
   import ISpin from 'iview-comp/spin/spin.vue';
 
   const ModuleState = namespace('app', State);
+  const ModuleGetter = namespace('app', Getter);
 
   @Component({
     name: 'app',
@@ -55,6 +56,9 @@
 
     @ModuleState
     globalInitialized: boolean;
+
+    @ModuleGetter(Global_Loading)
+    loading: boolean;
 
     mounted() {
       this.$watch('site.title', val => {

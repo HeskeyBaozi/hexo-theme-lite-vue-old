@@ -1,8 +1,9 @@
 import {Module, MutationTree, ActionTree, GetterTree} from 'vuex';
 import {Article} from "@/interfaces";
-import {fetchPostBySlug} from '@/api';
+import {fetchImplicitPageByName, fetchPostBySlug} from '@/api';
 import moment from 'moment';
 import {Initialized_Global_App} from "@/store/modules/app";
+import {AxiosResponse} from "axios";
 
 class ArticleState {
   article: Article = {
@@ -21,6 +22,7 @@ class ArticleState {
     tags: []
   };
   pageInitialized = false;
+  loading = true;
 }
 
 /**
@@ -29,22 +31,27 @@ class ArticleState {
 const Save_Article = 'Save_Article';
 const Make_Sure_Initialized = 'Make_Sure_Initialized';
 const Begin_Initialize = 'Begin_Initialize';
+const Show_Loading = 'Show_Loading';
+const Hide_Loading = 'Hide_Loading';
 
 /**
  * Mutations
  */
 const mutations: MutationTree<ArticleState> = {
   [Save_Article]: (state, payload: { article: Article }) => {
-    state.article = {
-      ...state.article,
-      ...payload.article
-    };
+    state.article = payload.article;
   },
   [Make_Sure_Initialized]: (state) => {
     state.pageInitialized = true;
   },
   [Begin_Initialize]: (state) => {
     state.pageInitialized = false;
+  },
+  [Show_Loading]: (state) => {
+    state.loading = true;
+  },
+  [Hide_Loading]: (state) => {
+    state.loading = false;
   }
 };
 
@@ -56,17 +63,24 @@ export const Initialize_Article_Page = 'Initialize_Article_Page';
  * Actions
  */
 const actions: ActionTree<ArticleState, any> = {
-  [Initialize_Article_Page]: async ({dispatch, commit, getters}, payload: { slug: string }) => {
+  [Initialize_Article_Page]: async ({dispatch, commit, getters}, payload: { slug: string, isPage: boolean }) => {
     if (!getters[Page_Initialized] || getters[Current_Article_Slug] !== payload.slug) {
       await dispatch(`app/${Initialized_Global_App}`, null, {root: true});
       commit({
         type: Begin_Initialize
       });
-      const res = await fetchPostBySlug(payload.slug);
+      commit({
+        type: Show_Loading
+      });
+      const res: AxiosResponse = await (payload.isPage ?
+        fetchImplicitPageByName(payload.slug) : fetchPostBySlug(payload.slug));
       const {data} = res;
       commit({
         type: Save_Article,
         article: data
+      });
+      commit({
+        type: Hide_Loading
       });
       commit({
         type: Make_Sure_Initialized
@@ -79,6 +93,7 @@ const actions: ActionTree<ArticleState, any> = {
  * Getters Types
  */
 export const Page_Initialized = 'Page_Initialized';
+export const Article_Loading = 'Article_Loading';
 const Current_Article_Slug = 'Current_Article_Slug';
 
 /**
@@ -89,7 +104,10 @@ const getters: GetterTree<ArticleState, any> = {
     return state.pageInitialized;
   },
   [Current_Article_Slug]: (state): string => {
-    return state.article.slug;
+    return state.article.slug
+  },
+  [Article_Loading]: (state): boolean => {
+    return state.loading;
   }
 };
 

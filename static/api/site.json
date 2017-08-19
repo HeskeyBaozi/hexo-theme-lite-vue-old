@@ -46,18 +46,21 @@
     "branch": "master"
   },
   "ignore": [],
-  "archive_generator": {
-    "per_page": 4,
-    "yearly": true,
-    "monthly": true,
-    "daily": false
-  },
   "category_generator": {
     "per_page": 4
   },
   "index_generator": {
     "per_page": 4,
     "order_by": "-date"
+  },
+  "archive_generator": {
+    "per_page": 4,
+    "yearly": true,
+    "monthly": true,
+    "daily": false
+  },
+  "tag_generator": {
+    "per_page": 4
   },
   "marked": {
     "gfm": true,
@@ -67,9 +70,6 @@
     "breaks": true,
     "smartLists": true,
     "smartypants": true
-  },
-  "tag_generator": {
-    "per_page": 4
   },
   "server": {
     "port": 4000,
@@ -83,15 +83,19 @@
     "url": "/static/images/6828af33.jpg"
   },
   "menu": {
+    "404": "/pages/404",
     "home": "/home",
-    "archives": "/archives"
+    "archives": "/archives",
+    "about": "/pages/about"
   },
   "menu_icons": {
+    "404": "sad-outline",
     "enable": true,
     "home": "ios-home",
     "archives": "android-list",
     "categories": "android-bookmark",
-    "tags": "pound"
+    "tags": "pound",
+    "about": "android-favorite"
   },
   "social": {
     "github": "https://github.com/heskeybaozi",
