@@ -13,8 +13,8 @@ avatar:
 menu:
   home: /
   archives: /archives
-  categories: /categories
-  tags: /tags
+  #categories: /categories
+  #tags: /tags
 
 menu_icons:
   enable: true
