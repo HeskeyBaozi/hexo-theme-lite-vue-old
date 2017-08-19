@@ -10,7 +10,9 @@
 
     <section id="scroll-background">
       <div class="container card-container">
-        <router-view></router-view>
+        <transition name="fade" mode="in-out">
+          <router-view></router-view>
+        </transition>
         <div v-show="loading" class="loading">
           <i-spin size="large"></i-spin>
           <span>Loading</span>
@@ -80,6 +82,35 @@
   #footer-background {
     // if you use .my-background here
   }
+
+  #scroll-background {
+    .card-container {
+      position: relative;
+
+      .fade-enter-active, .fade-leave-active {
+        background-color: white;
+        transition: opacity, transform 500ms;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 1em 2em;
+      }
+
+      .fade-leave-active {
+        z-index: -100;
+      }
+
+      .fade-leave {
+        z-index: -100;
+      }
+
+      .fade-enter {
+        opacity: 0;
+        transform: translateY(-1em);
+      }
+    }
+  }
 </style>
 <style lang="less" scoped>
   #app {
@@ -106,11 +137,10 @@
 
     .card-container {
       position: relative;
-      min-height: 30vh;
       background-color: white;
       padding: 1em 2em;
       box-shadow: 0 0 5px gray;
-      transition: box-shadow 300ms;
+      transition: box-shadow, height 800ms;
       &:hover {
         box-shadow: 0 0 8px gray;
       }
