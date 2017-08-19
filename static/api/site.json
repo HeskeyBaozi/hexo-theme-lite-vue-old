@@ -74,7 +74,7 @@
     },
     "avatar": {
         "enable": true,
-        "url": "/images/6828af33.jpg"
+        "url": "/static/images/6828af33.jpg"
     },
     "menu": {
         "home": "/",

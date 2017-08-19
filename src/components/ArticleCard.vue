@@ -48,7 +48,7 @@
       </template>
     </section>
     <i-modal v-model="modal.isShow" :footerHide="true">
-      <img class="article-modal-img" :src="modal.url" alt="modal-img"/>
+      <img class="article-modal-img" :src="modal.url" :alt="modal.url"/>
     </i-modal>
   </article>
 </template>
@@ -91,7 +91,6 @@
     };
 
     showModal(url: string, post) {
-      console.log('url', url, 'post', post);
       this.modal.url = url;
       this.modal.post = post;
       this.modal.isShow = true;
@@ -142,6 +141,8 @@
 
       .article-modal-img {
         max-width: 900px;
+        min-width: 150px;
+        min-height: 100px;
       }
 
       .article-modal-close {
