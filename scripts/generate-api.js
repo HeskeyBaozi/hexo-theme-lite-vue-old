@@ -5,8 +5,9 @@
 
 'use strict';
 
-var pagination = require('hexo-pagination');
-var _pick = require('lodash.pick');
+const pagination = require('hexo-pagination');
+
+// const _pick = require('lodash.pick');
 
 function filterHTMLTags(str) {
   return str ? str
@@ -16,7 +17,7 @@ function filterHTMLTags(str) {
 }
 
 function fetchCovers(str) {
-  var temp,
+  let temp,
     imgURLs = [],
     rex = /<img[^>]+src="?([^"\s]+)"(.*)>/g;
   while (temp = rex.exec(str)) {
@@ -26,13 +27,13 @@ function fetchCovers(str) {
 }
 
 function fetchCover(str) {
-  var covers = fetchCovers(str)
+  const covers = fetchCovers(str);
   return covers ? covers[0] : null;
 }
 
 function generator(cfg, site) {
 
-  var restful = {
+  let restful = {
       site: true,
       posts_size: cfg.per_page || 10,
       posts_props: {
@@ -63,7 +64,7 @@ function generator(cfg, site) {
     }),
 
     posts_props = (function () {
-      var props = restful.posts_props;
+      const props = restful.posts_props;
 
       return function (name, val) {
         return props[name] ? (typeof val === 'function' ? val() : val) : null;
@@ -130,7 +131,7 @@ function generator(cfg, site) {
     },
 
     cateMap = function (item) {
-      var itemData = item.data;
+      const itemData = item.data;
       return {
         path: itemData.path,
         data: JSON.stringify({
@@ -146,13 +147,13 @@ function generator(cfg, site) {
   if (restful.site) {
     apiData.push({
       path: 'api/site.json',
-      data: JSON.stringify(restful.site instanceof Array ? _pick(cfg, restful.site) : cfg)
+      data: JSON.stringify(/*restful.site instanceof Array ? _pick(cfg, restful.site) :*/ cfg)
     });
   }
 
   if (restful.categories) {
 
-    var cates = cateReduce(site.categories, 'categories');
+    const cates = cateReduce(site.categories, 'categories');
 
     if (!!cates.length) {
       apiData.push({
@@ -166,7 +167,7 @@ function generator(cfg, site) {
   }
 
   if (restful.tags) {
-    var tags = cateReduce(site.tags, 'tags');
+    const tags = cateReduce(site.tags, 'tags');
 
     if (tags.length) {
       apiData.push({
@@ -179,17 +180,16 @@ function generator(cfg, site) {
 
   }
 
-  var postlist = posts.map(postMap);
+  const postlist = posts.map(postMap);
 
   if (restful.posts_size > 0) {
 
-    var page_posts = [],
-      i = 0,
+    const page_posts = [],
       len = postlist.length,
       ps = restful.posts_size,
       pc = Math.ceil(len / ps);
 
-    for (; i < len; i += ps) {
+    for (let i = 0; i < len; i += ps) {
       page_posts.push({
         path: 'api/posts/' + Math.ceil((i + 1) / ps) + '.json',
         data: JSON.stringify({
@@ -218,7 +218,7 @@ function generator(cfg, site) {
 
   if (restful.post) {
     apiData = apiData.concat(posts.map(function (post) {
-      var path = 'api/articles/' + post.slug + '.json';
+      const path = 'api/articles/' + post.slug + '.json';
       return {
         path: path,
         data: JSON.stringify({
@@ -253,8 +253,8 @@ function generator(cfg, site) {
 
   if (restful.pages) {
     apiData = apiData.concat(site.pages.data.map(function (page) {
-      var safe_title = page.title.replace(/[^a-z0-9]/gi, '-').toLowerCase()
-      var path = 'api/pages/' + safe_title + '.json';
+      const safe_title = page.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+      const path = 'api/pages/' + safe_title + '.json';
 
       return {
         path: path,
