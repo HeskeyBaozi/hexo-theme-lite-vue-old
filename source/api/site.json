@@ -74,11 +74,7 @@
     },
     "avatar": {
         "enable": true,
-        "url": "/assets/6828af33.jpg"
-    },
-    "body_background": {
-        "enable": true,
-        "url": "/assets/body-background.png"
+        "url": "/images/6828af33.jpg"
     },
     "menu": {
         "home": "/",

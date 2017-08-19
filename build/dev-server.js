@@ -38,7 +38,7 @@ const hotMiddleware = require('webpack-hot-middleware')(compiler, {
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-    hotMiddleware.publish({ action: 'reload' });
+    hotMiddleware.publish({action: 'reload'});
     cb()
   })
 });
@@ -47,7 +47,7 @@ compiler.plugin('compilation', function (compilation) {
 Object.keys(proxyTable).forEach(function (context) {
   let options = proxyTable[context];
   if (typeof options === 'string') {
-    options = { target: options }
+    options = {target: options}
   }
   app.use(proxyMiddleware(options.filter || context, options))
 });
@@ -64,7 +64,8 @@ app.use(hotMiddleware);
 
 // serve pure static assets
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
-app.use(staticPath, express.static('./assets'));
+app.use(config.dev.assetsPublicPath, express.static('./source'));
+app.use(staticPath, express.static('./source'));
 
 const uri = 'http://localhost:' + port;
 
