@@ -1,10 +1,10 @@
 <template>
   <div id="lite-implicit-article">
-    <article-card :post="article"
+    <article-card :post="implicit_article"
                   :dateFormat="dateTimeFormat.date_format"
                   :showExcerpt="false"
     ></article-card>
-    <article-content :content="article.content"></article-content>
+    <article-content :content="implicit_article.content"></article-content>
     <footer class="article-footer">
       <p>EOF</p>
     </footer>
@@ -15,7 +15,7 @@
   import {Component, Vue, Watch} from 'vue-property-decorator';
   import {namespace, State, Action} from 'vuex-class';
   import {Article} from '@/interfaces';
-  import {ArticleModule, Initialize_Article_Page} from "@/store/modules/one-article";
+  import {ArticleModule, Initialize_Implicit_Article_Page} from "@/store/modules/one-article";
   import ArticleContent from '@/components/ArticleContent';
   import ArticleCard from '@/components/ArticleCard';
   import {DateTimeFormat} from "@/interfaces/appClass";
@@ -31,13 +31,13 @@
   })
   export default class OneImplicitArticle extends Vue {
     @ModuleState
-    article: Article;
+    implicit_article: Article;
 
     @AppState
     dateTimeFormat: DateTimeFormat;
 
     async asyncData({store, route}): Promise<void> {
-      store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug, isPage: true});
+      await store.dispatch(`article/${Initialize_Implicit_Article_Page}`, {title: route.params['title']});
     }
   }
 </script>

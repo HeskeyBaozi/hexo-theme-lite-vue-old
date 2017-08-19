@@ -35,3 +35,8 @@ social_icons:
   enable: true
   github: social-github
   weibo: ionic
+
+# -------------------------------------------------------
+# Powered by
+# -------------------------------------------------------
+powered_by: Hexo Theme Lite

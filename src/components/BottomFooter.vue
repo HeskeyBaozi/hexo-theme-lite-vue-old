@@ -7,7 +7,7 @@
           <span v-else>{{item.name}}</span>
         </a>
       </div>
-      <p class="hexo-theme">Hexo Theme: Lite</p>
+      <p v-if="theme.powered_by" class="hexo-theme">{{theme.powered_by}}</p>
       <router-link :to="{name: 'Home'}" class="title">{{site.title}}</router-link>
       <p>{{site.subtitle}}</p>
     </section>

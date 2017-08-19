@@ -21,7 +21,7 @@
           </div>
         </div>
       </i-timeline-item>
-      <i-timeline-item>
+      <i-timeline-item >
         <i-icon type="ios-browsers-outline" slot="dot"></i-icon>
         <p>{{page.per_page ? pagination.total : postsList.length}} article(s) in total.</p>
       </i-timeline-item>

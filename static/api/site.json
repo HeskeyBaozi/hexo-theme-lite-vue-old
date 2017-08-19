@@ -49,15 +49,15 @@
   "category_generator": {
     "per_page": 4
   },
-  "index_generator": {
-    "per_page": 4,
-    "order_by": "-date"
-  },
   "archive_generator": {
     "per_page": 4,
     "yearly": true,
     "monthly": true,
     "daily": false
+  },
+  "index_generator": {
+    "per_page": 4,
+    "order_by": "-date"
   },
   "tag_generator": {
     "per_page": 4
@@ -78,32 +78,31 @@
     "compress": false,
     "header": true
   },
-  "avatar": {
-    "enable": true,
-    "url": "/static/images/6828af33.jpg"
-  },
-  "menu": {
-    "404": "/pages/404",
-    "home": "/home",
-    "archives": "/archives",
-    "about": "/pages/about"
-  },
-  "menu_icons": {
-    "404": "sad-outline",
-    "enable": true,
-    "home": "ios-home",
-    "archives": "android-list",
-    "categories": "android-bookmark",
-    "tags": "pound",
-    "about": "android-favorite"
-  },
-  "social": {
-    "github": "https://github.com/heskeybaozi",
-    "weibo": "http://weibo.com/52hezhiyu"
-  },
-  "social_icons": {
-    "enable": true,
-    "github": "social-github",
-    "weibo": "ionic"
+  "theme_config": {
+    "avatar": {
+      "enable": true,
+      "url": "/static/images/6828af33.jpg"
+    },
+    "menu": {
+      "home": "/home",
+      "archives": "/archives"
+    },
+    "menu_icons": {
+      "enable": true,
+      "home": "ios-home",
+      "archives": "android-list",
+      "categories": "android-bookmark",
+      "tags": "pound"
+    },
+    "social": {
+      "github": "https://github.com/heskeybaozi",
+      "weibo": "http://weibo.com/52hezhiyu"
+    },
+    "social_icons": {
+      "enable": true,
+      "github": "social-github",
+      "weibo": "ionic"
+    },
+    "powered_by": "Hexo Theme Lite"
   }
 }

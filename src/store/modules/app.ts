@@ -113,11 +113,7 @@ const mutations: MutationTree<AppState> = {
 
     state.theme = {
       ...state.theme,
-      menu: json.menu,
-      menu_icons: json.menu_icons,
-      social: json.social,
-      social_icons: json.social_icons,
-      avatar: json.avatar
+      ...json.theme_config
     };
 
   },

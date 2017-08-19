@@ -52,7 +52,7 @@ export function createRouter() {
         component: () => import('@/pages/Article.vue')
       },
       {
-        path: '/pages/:slug',
+        path: '/pages/:title',
         name: 'OnePage',
         component: () => import('@/pages/ImplicitArticle.vue')
       }

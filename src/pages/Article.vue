@@ -36,7 +36,7 @@
     dateTimeFormat: DateTimeFormat;
 
     async asyncData({store, route}): Promise<void> {
-      store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug, isPage: false});
+      await store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug});
     }
   }
 </script>
