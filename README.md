@@ -2,19 +2,27 @@
 
 > A Hexo Theme inspired by [Clean-Blog](https://github.com/klugjo/hexo-theme-clean-blog), [Laughing](https://github.com/BoizZ/hexo-theme-laughing), and [Material](https://github.com/viosey/hexo-theme-material).
 
-## Preview
+# Get Started
 
-`/home`
+1. enter your hexo root fold
 
-![home](./docs/home.png)
+```git
+$ git clone https://github.com/HeskeyBaozi/hexo-theme-lite.git themes/lite
+```
 
-`/archives`
+2. edit the root configure file `_config.yml`
 
-![archives](./docs/archives.png)
+```yaml
+theme: lite
+```
 
-`/categories`
-
-![categories](./docs/categories.png)
+3. run commands
+```bash
+# generate the static files
+hexo g
+# run local server
+hexo s
+```
 
 ## Build Setup
 
@@ -40,5 +48,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
