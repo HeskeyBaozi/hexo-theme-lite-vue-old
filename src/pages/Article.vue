@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
+  import {Component, Vue, Watch} from 'vue-property-decorator';
   import {namespace, State, Action} from 'vuex-class';
   import {Article} from '@/interfaces';
   import {ArticleModule, Initialize_Article_Page} from "@/store/modules/one-article";
@@ -36,9 +36,8 @@
     dateTimeFormat: DateTimeFormat;
 
     async asyncData({store, route}): Promise<void> {
-      return store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug});
+      await store.dispatch(`article/${Initialize_Article_Page}`, {slug: route.params.slug});
     }
-
   }
 </script>
 

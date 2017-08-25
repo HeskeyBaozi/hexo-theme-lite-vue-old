@@ -37,12 +37,10 @@
   #lite-avatar-info {
     padding: 1em;
     background-color: white;
-    &:before {
-      filter: blur(10px);
-    }
+    color: white;
+    text-shadow: 1px 1px 8px #444;
 
     .head-description {
-      text-shadow: 0 0 5px white;
       .author-name {
         font-size: 1.2em;
       }

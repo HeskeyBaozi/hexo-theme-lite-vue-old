@@ -8,6 +8,7 @@
             class="page"
             size="small"
             @on-change="handlePageChange($event)"
+            :current="currentPage"
             :total="pagination.total"></i-page>
   </div>
 </template>
@@ -49,13 +50,18 @@
     dateTimeFormat: DateTimeFormat;
 
     async asyncData({store, route}): Promise<void> {
-      return store.dispatch(`home/${Initialize_Home_Page}`);
+      await store.dispatch(`home/${Initialize_Home_Page}`);
+      if (route.query['page']) {
+        await store.dispatch(`home/${Input_PageNum}`, {pageNum: route.query['page']});
+      }
     }
 
+    handlePageChange(toPageNum: string) {
+      this.$router.push({name: 'Home', query: {page: toPageNum}});
+    }
 
-    async handlePageChange(toPageNum: number) {
-      await this.inputPageNum({pageNum: toPageNum});
-      window.scrollTo(0, 0);
+    get currentPage(): number {
+      return this.$route.query['page'] && Number.parseInt(this.$route.query['page']) || 1;
     }
   }
 </script>

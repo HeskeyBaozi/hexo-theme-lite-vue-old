@@ -12,6 +12,7 @@ import {
   Theme
 } from "@/interfaces/appClass";
 import {AxiosResponse} from "axios";
+import {Article_Loading} from "@/store/modules/one-article";
 
 
 class AppState {
@@ -25,6 +26,7 @@ class AppState {
   extensions: Extensions = new Extensions();
   theme: Theme = new Theme();
   globalInitialized: boolean = false;
+  loading: boolean = true;
 }
 
 /**
@@ -32,6 +34,8 @@ class AppState {
  */
 const Save_Global_Hexo_Var = 'Save_Global_Hexo_Var';
 const Make_Sure_Initialized = 'Make_Sure_Initialized';
+export const Show_Loading = 'Show_Loading';
+export const Hide_Loading = 'Hide_Loading';
 
 /**
  * Mutations
@@ -109,16 +113,18 @@ const mutations: MutationTree<AppState> = {
 
     state.theme = {
       ...state.theme,
-      menu: json.menu,
-      menu_icons: json.menu_icons,
-      social: json.social,
-      social_icons: json.social_icons,
-      avatar: json.avatar
+      ...json.theme_config
     };
 
   },
   [Make_Sure_Initialized]: state => {
     state.globalInitialized = true;
+  },
+  [Show_Loading]: (state: AppState) => {
+    state.loading = true;
+  },
+  [Hide_Loading]: (state: AppState) => {
+    state.loading = false;
   }
 };
 
@@ -130,13 +136,12 @@ export const Initialized_Global_App = 'Initialized_Global_App';
  * Actions
  */
 const actions: ActionTree<AppState, any> = {
-  [Initialized_Global_App]: async ({commit, getters}): Promise<void> => {
+  [Initialized_Global_App]: async ({commit, getters, dispatch}): Promise<void> => {
     if (!getters[Global_Initialized]) {
-      const res: AxiosResponse = await new Promise<AxiosResponse>((resolve) => {
-        setTimeout(() => {
-          resolve(fetchHexoConfig());
-        }, 3000);
+      await dispatch({
+        type: Show_Loading
       });
+      const res: AxiosResponse = await fetchHexoConfig();
       const {data} = res;
       commit({
         type: Save_Global_Hexo_Var,
@@ -145,7 +150,20 @@ const actions: ActionTree<AppState, any> = {
       commit({
         type: Make_Sure_Initialized
       });
+      await dispatch({
+        type: Hide_Loading
+      });
     }
+  },
+  [Show_Loading]: async ({commit}): Promise<void> => {
+    commit({
+      type: Show_Loading
+    });
+  },
+  [Hide_Loading]: async ({commit}): Promise<void> => {
+    commit({
+      type: Hide_Loading
+    });
   }
 };
 
@@ -154,6 +172,7 @@ const actions: ActionTree<AppState, any> = {
  */
 export const Global_Initialized = 'Global_Initialized';
 export const Global_Pagination = 'Global_Pagination';
+export const Global_Loading = 'Global_Loading';
 
 /**
  * Getters
@@ -164,6 +183,9 @@ const getters: GetterTree<AppState, any> = {
   },
   [Global_Pagination]: (state: AppState) => {
     return state.page;
+  },
+  [Global_Loading]: (state: AppState, getters: any, rootState: any, rootGetters: any) => {
+    return state.loading || rootGetters[`article/${Article_Loading}`];
   }
 };
 

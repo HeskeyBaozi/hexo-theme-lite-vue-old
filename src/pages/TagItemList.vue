@@ -19,6 +19,7 @@
   import ArticleCard from '@/components/ArticleCard';
   import {DateTimeFormat} from "@/interfaces/appClass";
   import IIcon from 'iview-comp/icon/icon.vue';
+  import {NavigationGuard, Route} from "vue-router";
 
   const ModuleState = namespace('tags', State);
   const ModuleAction = namespace('tags', Action);
@@ -42,11 +43,11 @@
       return this.$route.params['tag_name'];
     }
 
-    created() {
-      this.initialize({
-        tag_name: this.name
+    async asyncData({store, route}) {
+      await store.dispatch(`tags/${Initialize_Related_Posts}`, {
+        tag_name: route.params['tag_name']
       });
-    }
+    };
   }
 </script>
 
