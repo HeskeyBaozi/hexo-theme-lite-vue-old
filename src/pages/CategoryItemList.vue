@@ -42,11 +42,11 @@
       return this.$route.params['category_name'];
     }
 
-    created() {
-      this.initialize({
-        category_name: this.name
+    async asyncData({store, route}) {
+      await store.dispatch(`categories/${Initialize_Related_Posts}`, {
+        category_name: route.params['category_name']
       });
-    }
+    };
   }
 </script>
 

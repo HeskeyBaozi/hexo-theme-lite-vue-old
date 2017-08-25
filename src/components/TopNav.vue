@@ -113,6 +113,7 @@
     &:after {
       background-color: rgba(255, 255, 255, 0) !important;
     }
+
   }
 
   .ivu-menu-horizontal {
@@ -122,7 +123,7 @@
 
   .ivu-menu {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
 </style>
 <style lang="less" scoped>
@@ -140,7 +141,7 @@
     text-shadow: 0 0 3px white;
 
     &:before {
-      filter: blur(6px);
+      filter: blur(30px);
     }
 
     .menu-title {

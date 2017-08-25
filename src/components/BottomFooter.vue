@@ -7,7 +7,7 @@
           <span v-else>{{item.name}}</span>
         </a>
       </div>
-      <p class="hexo-theme">Hexo Theme: Lite</p>
+      <p v-if="theme.powered_by" class="hexo-theme">{{theme.powered_by}}</p>
       <router-link :to="{name: 'Home'}" class="title">{{site.title}}</router-link>
       <p>{{site.subtitle}}</p>
     </section>
@@ -56,14 +56,15 @@
   #lite-footer {
     padding: 2em;
     background-color: white;
-    &:before {
-      filter: blur(10px);
-    }
+    color: white;
+    text-shadow: 1px 1px 8px #444;
 
     .footer-description {
-      text-shadow: 0 0 5px white;
+      a {
+        color: white;
+        text-shadow: 1px 1px 8px #444;
+      }
       text-align: center;
-
       .contact-list {
         font-size: 1.2em;
         > * {
