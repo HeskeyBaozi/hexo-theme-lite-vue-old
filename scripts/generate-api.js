@@ -276,5 +276,7 @@ function generator(cfg, site) {
 }
 
 hexo.extend.generator.register('liteRestfulApi', function (site) {
-  return generator(Object.assign({}, hexo.config, hexo.theme.config), site);
+  return generator(Object.assign({}, hexo.config, {
+    theme_config: hexo.theme.config
+  }), site);
 });
