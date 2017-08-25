@@ -87,5 +87,6 @@ export class Theme {
     enable: false,
     url: ''
   };
+  powered_by = '';
 }
 

@@ -16,28 +16,16 @@ export function createRouter() {
         path: '/home',
         name: 'Home',
         component: () => import('@/pages/Home.vue'),
-        meta: {
-          requireGlobalInitialized: true,
-          scrollTop: true
-        }
       },
       {
         path: '/archives',
         name: 'Archives',
         component: () => import('@/pages/Archives.vue'),
-        meta: {
-          requireGlobalInitialized: true,
-          scrollTop: true
-        }
       },
       {
         path: '/categories',
         name: 'Categories',
         component: () => import('@/pages/Categories.vue'),
-        meta: {
-          requireGlobalInitialized: true,
-          scrollTop: true
-        },
         children: [
           {
             path: ':category_name',
@@ -50,10 +38,6 @@ export function createRouter() {
         path: '/tags',
         name: 'Tags',
         component: () => import('@/pages/Tags.vue'),
-        meta: {
-          requireGlobalInitialized: true,
-          scrollTop: true
-        },
         children: [
           {
             path: ':tag_name',
@@ -65,11 +49,12 @@ export function createRouter() {
       {
         path: '/articles/:slug',
         name: 'OneArticle',
-        component: () => import('@/pages/Article.vue'),
-        meta: {
-          requireGlobalInitialized: true,
-          scrollTop: true
-        }
+        component: () => import('@/pages/Article.vue')
+      },
+      {
+        path: '/pages/:title',
+        name: 'OnePage',
+        component: () => import('@/pages/ImplicitArticle.vue')
       }
     ]
   });
